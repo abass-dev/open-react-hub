@@ -2,7 +2,7 @@ import chalk from 'chalk';
 import fs from 'fs-extra';
 import path from 'path';
 import { execSync } from 'child_process';
-import { getRegistry } from '../utils/registry';
+import { getRegistry } from '../utils/registry.js';
 
 interface ComponentInfo {
   name: string;
