@@ -1,12 +1,12 @@
 {
   "components": {
-    "text-animations": {
+    "ui": {
       "split-text": {
         "name": "@open-react-hub/split-text",
         "description": "Animate text by splitting it into characters",
         "version": "1.0.1",
         "npm": "https://www.npmjs.com/package/@open-react-hub/split-text",
-        "github": "github/abass-dev/open-react-hub/main/component/ui/split-text",
+        "github": "https://raw.githubusercontent.com/abass-dev/open-react-hub/main/components/ui/split-text.tsx",
         "author": "abass-dev",
         "tags": [
           "animation",

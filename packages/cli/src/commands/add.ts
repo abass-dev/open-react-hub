@@ -80,29 +80,32 @@ async function installFromNpm(packageName: string) {
   }
 }
 
+
 async function installFromGithub(repoPath: string) {
   console.log(chalk.blue(`Installing from GitHub...`));
-  const [owner, repo, ...componentPath] = repoPath.split('/');
-  const fullRepoUrl = `https://github.com/${owner}/${repo}`;
-  const componentFullPath = componentPath.join('/');
+  const [source, owner, repo, ...componentPath] = repoPath.split('/');
 
-  const tempDir = path.join(process.cwd(), '.temp-jsrepo');
-  await fs.ensureDir(tempDir);
-
-  try {
-    execSync(`git clone --depth 1 --filter=blob:none --sparse ${fullRepoUrl} ${tempDir}`);
-    process.chdir(tempDir);
-    execSync(`git sparse-checkout set ${componentFullPath}`);
-
-    const sourcePath = path.join(tempDir, componentFullPath);
-    const destinationPath = path.join(process.cwd(), 'components', path.basename(componentFullPath));
-    await fs.copy(sourcePath, destinationPath);
-  } finally {
-    process.chdir('..');
-    await fs.remove(tempDir);
+  if (source !== 'github') {
+    console.error(chalk.red('Invalid source. Please specify "github" as the source.'));
+    return;
   }
-}
 
+  const registry = await getRegistry();  // Fetch registry
+  const componentInfo = findComponentInRegistry(registry, repoPath);
+  if (!componentInfo || !componentInfo.github) {
+    console.error(chalk.red(`Component ${repoPath} not found or missing GitHub URL.`));
+    return;
+  }
+
+  // Fetch the raw content from GitHub
+  const response = await fetch(componentInfo.github);
+  const componentCode = await response.text();
+
+  const destinationPath = path.join(process.cwd(), 'components', `${componentPath[componentPath.length - 1]}.tsx`);
+  await fs.outputFile(destinationPath, componentCode);
+  
+  console.log(chalk.green(`Successfully fetched ${componentPath[componentPath.length - 1]} component from GitHub`));
+}
 function findComponentInRegistry(registry: any, componentPath: string): ComponentInfo | null {
   const parts = componentPath.split('/');
   let current = registry.components;
