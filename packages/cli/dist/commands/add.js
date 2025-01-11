@@ -11,23 +11,25 @@ import chalk from 'chalk';
 import fs from 'fs-extra';
 import path from 'path';
 import { execSync } from 'child_process';
+import { fileURLToPath } from 'url';
 import { getRegistry } from '../utils/registry.js';
+import pkg from 'inquirer';
+const { prompt } = pkg;
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 export function add(componentPath) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             console.log(chalk.blue('Fetching component information...'));
-            // Get component info from registry
             const registry = yield getRegistry();
             const componentInfo = findComponentInRegistry(registry, componentPath);
             if (!componentInfo) {
                 console.error(chalk.red(`Component "${componentPath}" not found in registry.`));
                 return;
             }
-            // If npm package exists, prefer that
             if (componentInfo.npm) {
                 yield installFromNpm(componentInfo.name);
             }
-            // Fallback to GitHub if available
             else if (componentInfo.github) {
                 yield installFromGithub(componentInfo.github);
             }
@@ -46,7 +48,39 @@ export function add(componentPath) {
 function installFromNpm(packageName) {
     return __awaiter(this, void 0, void 0, function* () {
         console.log(chalk.blue(`Installing ${packageName} from npm...`));
-        execSync(`npm install ${packageName}`, { stdio: 'inherit' });
+        try {
+            execSync(`npm install ${packageName}`, { stdio: 'inherit' });
+        }
+        catch (error) {
+            if (error) {
+                console.log(chalk.yellow('Detected a potential conflict with React versions.'));
+                const { action } = yield prompt([
+                    {
+                        type: 'list',
+                        name: 'action',
+                        message: 'How would you like to proceed?',
+                        choices: [
+                            { name: 'Use --force', value: 'force' },
+                            { name: 'Use --legacy-peer-deps', value: 'legacy' },
+                            { name: 'Cancel installation', value: 'cancel' }
+                        ]
+                    }
+                ]);
+                if (action === 'force') {
+                    execSync(`npm install ${packageName} --force`, { stdio: 'inherit' });
+                }
+                else if (action === 'legacy') {
+                    execSync(`npm install ${packageName} --legacy-peer-deps`, { stdio: 'inherit' });
+                }
+                else {
+                    console.log(chalk.yellow('Installation cancelled.'));
+                    return;
+                }
+            }
+            else {
+                throw error;
+            }
+        }
     });
 }
 function installFromGithub(repoPath) {
@@ -55,21 +89,17 @@ function installFromGithub(repoPath) {
         const [owner, repo, ...componentPath] = repoPath.split('/');
         const fullRepoUrl = `https://github.com/${owner}/${repo}`;
         const componentFullPath = componentPath.join('/');
-        // Create a temporary directory
         const tempDir = path.join(process.cwd(), '.temp-jsrepo');
         yield fs.ensureDir(tempDir);
         try {
-            // Clone the specific directory from the repository
             execSync(`git clone --depth 1 --filter=blob:none --sparse ${fullRepoUrl} ${tempDir}`);
             process.chdir(tempDir);
             execSync(`git sparse-checkout set ${componentFullPath}`);
-            // Copy the component to the current project
             const sourcePath = path.join(tempDir, componentFullPath);
             const destinationPath = path.join(process.cwd(), 'components', path.basename(componentFullPath));
             yield fs.copy(sourcePath, destinationPath);
         }
         finally {
-            // Clean up
             process.chdir('..');
             yield fs.remove(tempDir);
         }
