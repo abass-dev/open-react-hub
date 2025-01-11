@@ -5,7 +5,7 @@ import { add } from './commands/add.js';
 const program = new Command();
 
 program
-  .version('1.0.1')
+  .version('1.0.2')
   .description('OpenReactHub CLI - Manage React components and utilities');
 
 program
