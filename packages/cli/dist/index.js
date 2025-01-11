@@ -3,7 +3,7 @@ import { Command } from 'commander';
 import { add } from './commands/add.js';
 const program = new Command();
 program
-    .version('1.0.2')
+    .version('1.0.5')
     .description('OpenReactHub CLI - Manage React components and utilities');
 program
     .command('add <component>')

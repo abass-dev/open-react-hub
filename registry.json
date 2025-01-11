@@ -6,7 +6,7 @@
         "description": "Animate text by splitting it into characters",
         "version": "1.0.1",
         "npm": "https://www.npmjs.com/package/@open-react-hub/split-text",
-        "github": "github/abass-dev/open-react-hub-split-text",
+        "github": "github/abass-dev/open-react-hub/main/component/ui/split-text",
         "author": "abass-dev",
         "tags": [
           "animation",
