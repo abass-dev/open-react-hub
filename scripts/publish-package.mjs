@@ -31,10 +31,10 @@ async function publishPackage(packageName) {
     console.log('Installing dependencies...');
     execSync('npm ci', { stdio: 'inherit' });
 
-/*     // Run tests
+    // Run tests
     console.log('Running tests...');
     execSync('npm test', { stdio: 'inherit' });
- */
+
     // Build the package
     console.log('Building the package...');
     execSync('npm run build', { stdio: 'inherit' });
@@ -47,7 +47,6 @@ async function publishPackage(packageName) {
     console.log('Committing version bump...');
     execSync('git add package.json', { stdio: 'inherit' });
     execSync(`git commit -m "Bump ${packageName} version to ${newVersion}"`, { stdio: 'inherit' });
-    execSync('git push', { stdio: 'inherit' });
 
     console.log(`Successfully published ${packageName} package version ${newVersion}`);
   } catch (error) {

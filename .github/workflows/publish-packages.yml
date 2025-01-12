@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        package: [button]
+        package: [button, split-text]
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -24,6 +24,11 @@ jobs:
         with:
           node-version: '16'
           registry-url: 'https://registry.npmjs.org'
+
+      - name: Configure Git
+        run: |
+          git config --global user.email "github-actions@github.com"
+          git config --global user.name "GitHub Actions"
 
       - name: Check for changes
         id: check_changes
@@ -49,8 +54,6 @@ jobs:
       - name: Push changes
         if: steps.check_changes.outputs.changed == 'true'
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
           git push
           git push --tags
 
