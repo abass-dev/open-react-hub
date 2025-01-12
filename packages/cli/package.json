@@ -1,13 +1,15 @@
 {
   "name": "@open-react-hub/cli",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "CLI for OpenReactHub components",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
     "orh": "./dist/index.js"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc",
     "dev": "tsc -w",
