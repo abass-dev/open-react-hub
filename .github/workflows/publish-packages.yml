@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        package: [button, split-text]
+        package: [button, split-text, cli]
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
