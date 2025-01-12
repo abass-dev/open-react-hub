@@ -56,8 +56,12 @@ export async function add(componentPath: string) {
     if (componentInfo.tags && componentInfo.tags.length > 0) {
       console.log(chalk.blue('Tags:'), componentInfo.tags.join(', '));
     }
-  } catch (error) {
-    console.error(chalk.red('Error installing component:'), error);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error(chalk.red('Error installing component:'), error.message);
+    } else {
+      console.error(chalk.red('An unknown error occurred while installing the component.'));
+    }
     process.exit(1);
   }
 }
@@ -103,8 +107,12 @@ async function installFromGithub(repoPath: string, filePath: string, componentPa
 
     console.log(chalk.green(`\nComponent installed successfully at: ${destinationPath}`));
     console.log(chalk.yellow('\nMake sure to install any necessary dependencies.'));
-  } catch (error) {
-    console.error(chalk.red('Error downloading component:'), error);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error(chalk.red('Error downloading component:'), error.message);
+    } else {
+      console.error(chalk.red('An unknown error occurred while downloading the component.'));
+    }
     throw error;
   }
 }

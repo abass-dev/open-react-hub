@@ -20,8 +20,13 @@ export async function downloadFile({ owner, repo, path, destination }: DownloadO
 
     const content = await response.text();
     await fs.writeFile(destination, content, 'utf8');
-  } catch (error) {
-    throw new Error(`Error downloading file from GitHub: ${error.message}`);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.log(error.message);
+    } else {
+      console.log('An unknown error occurred while installing the component.');
+    }
+    process.exit(1);
   }
 }
 
