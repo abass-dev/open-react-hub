@@ -1,0 +1,39 @@
+name: Publish CLI to npm
+
+on:
+  push:
+    paths:
+      - 'packages/cli/package.json'
+
+jobs:
+  publish:
+    name: Publish CLI
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Checkout the repository
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # 2. Setup Node.js
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18 # Use the desired Node.js version
+        cache: 'npm'
+
+    # 3. Install dependencies
+    - name: Install dependencies
+      run: npm install
+
+    # 4. Build the CLI package
+    - name: Build CLI package
+      working-directory: packages/cli
+      run: npm run build
+
+    # 5. Publish the CLI package to npm
+    - name: Publish CLI package
+      working-directory: packages/cli
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      run: npm publish --access public

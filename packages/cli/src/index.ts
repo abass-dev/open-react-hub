@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { Command } from 'commander';
-import { add } from './commands/add';
+import { add } from './commands/add.js';
 
 const program = new Command();
 
@@ -10,7 +10,7 @@ program
 
 program
   .command('add <component>')
-  .description('Add a component to your project')
+  .description('Add a component to your project (npm package or GitHub path)')
   .action(add);
 
 program.parse(process.argv);
