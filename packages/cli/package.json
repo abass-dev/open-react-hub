@@ -1,6 +1,6 @@
 {
   "name": "@open-react-hub/cli",
-  "version": "1.0.56",
+  "version": "1.0.57",
   "description": "CLI for OpenReactHub components",
   "type": "module",
   "main": "dist/index.js",
