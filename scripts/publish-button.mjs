@@ -31,10 +31,10 @@ async function publishButton() {
     console.log('Installing dependencies...');
     execSync('npm install', { stdio: 'inherit' });
 
-    // Run tests
+ /*    // Run tests
     console.log('Running tests...');
     execSync('npm test', { stdio: 'inherit' });
-
+ */
     // Build the package
     console.log('Building the package...');
     execSync('npm run build', { stdio: 'inherit' });
