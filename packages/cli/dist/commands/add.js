@@ -11,12 +11,8 @@ import chalk from 'chalk';
 import fs from 'fs-extra';
 import path from 'path';
 import { execSync } from 'child_process';
-import { fileURLToPath } from 'url';
-import { getRegistry } from '../utils/registry.js';
-import pkg from 'inquirer';
-const { prompt } = pkg;
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import fetch from 'node-fetch';
+import { getRegistry } from '../utils/registry';
 export function add(componentPath) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -29,6 +25,9 @@ export function add(componentPath) {
             }
             if (componentInfo.npm) {
                 yield installFromNpm(componentInfo.name);
+            }
+            else if (componentInfo.github && componentInfo.file) {
+                yield installSingleFileFromGithub(componentInfo.github, componentInfo.file, componentPath);
             }
             else if (componentInfo.github) {
                 yield installFromGithub(componentInfo.github);
@@ -48,38 +47,28 @@ export function add(componentPath) {
 function installFromNpm(packageName) {
     return __awaiter(this, void 0, void 0, function* () {
         console.log(chalk.blue(`Installing ${packageName} from npm...`));
+        execSync(`npm install ${packageName}`, { stdio: 'inherit' });
+    });
+}
+function installSingleFileFromGithub(repoPath, filePath, componentPath) {
+    return __awaiter(this, void 0, void 0, function* () {
+        console.log(chalk.blue(`Fetching single file from GitHub...`));
+        const [owner, repo] = repoPath.split('/');
+        const fileUrl = `https://raw.githubusercontent.com/${owner}/${repo}/main/${filePath}`;
         try {
-            execSync(`npm install ${packageName}`, { stdio: 'inherit' });
+            const response = yield fetch(fileUrl);
+            if (!response.ok) {
+                throw new Error(`Failed to fetch file: ${response.statusText}`);
+            }
+            const content = yield response.text();
+            const destinationPath = path.join(process.cwd(), 'components', componentPath + '.tsx');
+            yield fs.ensureDir(path.dirname(destinationPath));
+            yield fs.writeFile(destinationPath, content);
+            console.log(chalk.green(`Component file saved to ${destinationPath}`));
         }
         catch (error) {
-            if (error) {
-                console.log(chalk.yellow('Detected a potential conflict with React versions.'));
-                const { action } = yield prompt([
-                    {
-                        type: 'list',
-                        name: 'action',
-                        message: 'How would you like to proceed?',
-                        choices: [
-                            { name: 'Use --force', value: 'force' },
-                            { name: 'Use --legacy-peer-deps', value: 'legacy' },
-                            { name: 'Cancel installation', value: 'cancel' }
-                        ]
-                    }
-                ]);
-                if (action === 'force') {
-                    execSync(`npm install ${packageName} --force`, { stdio: 'inherit' });
-                }
-                else if (action === 'legacy') {
-                    execSync(`npm install ${packageName} --legacy-peer-deps`, { stdio: 'inherit' });
-                }
-                else {
-                    console.log(chalk.yellow('Installation cancelled.'));
-                    return;
-                }
-            }
-            else {
-                throw error;
-            }
+            console.error(chalk.red('Error fetching file from GitHub:'), error);
+            throw error;
         }
     });
 }

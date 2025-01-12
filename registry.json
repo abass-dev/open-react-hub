@@ -1,17 +1,18 @@
 {
   "components": {
     "ui": {
-      "split-text": {
-        "name": "@open-react-hub/split-text",
-        "description": "Animate text by splitting it into characters",
-        "version": "1.0.1",
-        "npm": "https://www.npmjs.com/package/@open-react-hub/split-text",
-        "github": "https://raw.githubusercontent.com/abass-dev/open-react-hub/main/components/ui/split-text.tsx",
+      "button": {
+        "name": "@open-react-hub/button",
+        "description": "A customizable button component with primary and secondary variants",
+        "version": "1.0.0",
+        "npm": "https://www.npmjs.com/package/@open-react-hub/button",
+        "github": "github/abass-dev/open-react-hub",
+        "file": "packages/button/src/Button.tsx",
         "author": "abass-dev",
         "tags": [
-          "animation",
-          "text",
-          "react-spring"
+          "ui",
+          "button",
+          "react"
         ]
       }
     }

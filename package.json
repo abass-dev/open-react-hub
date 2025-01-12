@@ -9,7 +9,8 @@
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
-    "publish-registry": "node scripts/publish-registry.js"
+    "publish-cli": "node scripts/publish-cli.mjs",
+    "publish-registry": "node scripts/publish-registry.mjs"
   },
   "devDependencies": {
     "turbo": "^1.10.0",

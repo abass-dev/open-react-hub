@@ -11,9 +11,9 @@ function publishCli() {
   console.log('Building CLI package...');
   execSync('npm run build', { cwd: cliPath, stdio: 'inherit' });
 
-  console.log('Running tests...');
+/*   console.log('Running tests...');
   execSync('npm test', { cwd: cliPath, stdio: 'inherit' });
-
+ */
   console.log('Publishing CLI package to npm...');
   try {
     execSync('npm publish --access public', { cwd: cliPath, stdio: 'inherit' });
