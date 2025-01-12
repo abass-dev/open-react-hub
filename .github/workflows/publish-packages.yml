@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - 'packages/**'
+      - '!packages/**/package.json'  # Exclude package.json changes
 
 jobs:
   publish-packages:
@@ -31,27 +32,40 @@ jobs:
           git config --global user.email "github-actions@github.com"
           git config --global user.name "GitHub Actions"
 
-      - name: Check for changes
+      - name: Check for significant changes
         id: check_changes
         run: |
-          if git diff --quiet HEAD^ HEAD -- packages/${{ matrix.package }}; then
+          if git diff --quiet HEAD^ HEAD -- packages/${{ matrix.package }} ':!packages/${{ matrix.package }}/package.json'; then
             echo "changed=false" >> $GITHUB_OUTPUT
           else
             echo "changed=true" >> $GITHUB_OUTPUT
           fi
 
+      - name: Check last publish time
+        id: check_publish_time
+        run: |
+          last_commit_time=$(git log -1 --format=%ct packages/${{ matrix.package }})
+          current_time=$(date +%s)
+          time_diff=$((current_time - last_commit_time))
+          if [ $time_diff -ge 3600 ]; then
+            echo "can_publish=true" >> $GITHUB_OUTPUT
+          else
+            echo "can_publish=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Install dependencies
-        if: steps.check_changes.outputs.changed == 'true'
+        if: steps.check_changes.outputs.changed == 'true' && steps.check_publish_time.outputs.can_publish == 'true'
         run: npm ci
 
       - name: Publish package
-        if: steps.check_changes.outputs.changed == 'true'
+        if: steps.check_changes.outputs.changed == 'true' && steps.check_publish_time.outputs.can_publish == 'true'
         run: npm run publish-${{ matrix.package }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Push changes
-        if: steps.check_changes.outputs.changed == 'true'
+        if: steps.check_changes.outputs.changed == 'true' && steps.check_publish_time.outputs.can_publish == 'true'
         run: |
           git push https://${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}.git HEAD:${{ github.ref }}
           git push https://${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}.git --tags
+
