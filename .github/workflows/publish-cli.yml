@@ -14,12 +14,15 @@ jobs:
     # 1. Checkout the repository
     - name: Checkout code
       uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.PAT_TOKEN }}
 
     # 2. Setup Node.js
     - name: Setup Node.js
       uses: actions/setup-node@v3
       with:
         node-version: 18 # Use the desired Node.js version
+        registry-url: 'https://registry.npmjs.org'
         cache: 'npm'
 
     # 3. Install dependencies
