@@ -1,12 +1,12 @@
 import React from 'react';
 
-interface ButtonProps {
+export interface ButtonProps {
   children: React.ReactNode;
   onClick?: () => void;
   variant?: 'primary' | 'secondary';
 }
 
-const Button: React.FC<ButtonProps> = ({ children, onClick, variant = 'primary' }) => {
+export const Button: React.FC<ButtonProps> = ({ children, onClick, variant = 'primary' }) => {
   const baseStyles = 'px-4 py-2 rounded font-semibold text-sm';
   const variantStyles = {
     primary: 'bg-blue-500 text-white hover:bg-blue-600',
@@ -23,5 +23,4 @@ const Button: React.FC<ButtonProps> = ({ children, onClick, variant = 'primary' 
   );
 };
 
-export default Button;
 
