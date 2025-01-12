@@ -38,5 +38,8 @@
     "directory": "packages/cli"
   },
   "author": "Aabass Dev abassthedev@gmail.com",
-  "license": "MIT"
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.18.0"
+   }
 }

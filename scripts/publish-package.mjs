@@ -1,6 +1,7 @@
 import { execSync } from 'child_process';
 import fs from 'fs/promises';
 import path from 'path';
+import semver from 'semver';
 
 async function publishPackage(packageName) {
   const packagePath = path.join(process.cwd(), 'packages', packageName);
@@ -12,15 +13,20 @@ async function publishPackage(packageName) {
     process.chdir(packagePath);
 
     // Read current version
-    const packageJson = JSON.parse(await fs.readFile('package.json', 'utf-8'));
-    const currentVersion = packageJson.version;
+    let packageJson;
+    try {
+      const packageJsonContent = await fs.readFile('package.json', 'utf-8');
+      packageJson = JSON.parse(packageJsonContent);
+    } catch (error) {
+      console.error('Error reading or parsing package.json:', error);
+      process.exit(1);
+    }
 
+    const currentVersion = packageJson.version;
     console.log(`Current version: ${currentVersion}`);
 
-    // Increment patch version
-    const [major, minor, patch] = currentVersion.split('.').map(Number);
-    const newVersion = `${major}.${minor}.${patch + 1}`;
-
+    // Increment patch version using semver
+    const newVersion = semver.inc(currentVersion, 'patch');
     console.log(`New version: ${newVersion}`);
 
     // Update package.json with new version
@@ -30,18 +36,21 @@ async function publishPackage(packageName) {
     // Install dependencies
     console.log('Installing dependencies...');
     execSync('npm ci', { stdio: 'inherit' });
-/* 
-    // Run tests
-    console.log('Running tests...');
-    execSync('npm test', { stdio: 'inherit' });
- */
+
     // Build the package
     console.log('Building the package...');
     execSync('npm run build', { stdio: 'inherit' });
 
+    // Check if it's a dry run
+    const isDryRun = process.argv.includes('--dry-run');
+
     // Publish to npm
     console.log('Publishing to npm...');
-    execSync('npm publish --access public', { stdio: 'inherit' });
+    if (!isDryRun) {
+      execSync('npm publish --access public', { stdio: 'inherit' });
+    } else {
+      console.log('Dry run: skipping npm publish');
+    }
 
     // Commit version bump
     console.log('Committing version bump...');
@@ -64,4 +73,3 @@ if (!packageName) {
 }
 
 publishPackage(packageName);
-
