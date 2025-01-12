@@ -10,7 +10,7 @@
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "publish-registry": "node scripts/publish-registry.js",
-    "publish-cli": "node scripts/publish-package.mjs split-text",
+    "publish-cli": "node scripts/publish-package.mjs cli",
     "publish-button": "node scripts/publish-package.mjs button",
     "publish-split-text": "node scripts/publish-package.mjs split-text"
   },
