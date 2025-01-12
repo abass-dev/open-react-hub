@@ -5,6 +5,7 @@ export interface ButtonProps {
   onClick?: () => void;
   variant?: 'primary' | 'secondary';
 }
+
 export const Button: React.FC<ButtonProps> = ({ children, onClick, variant = 'primary' }) => {
   const baseStyles = 'px-4 py-2 rounded font-semibold text-sm';
   const variantStyles = {
