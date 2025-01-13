@@ -1,6 +1,7 @@
 import typescript from '@rollup/plugin-typescript';
 import dts from 'rollup-plugin-dts';
-import copy from 'rollup-plugin-copy';
+import commonjs from '@rollup/plugin-commonjs';
+import resolve from '@rollup/plugin-node-resolve';
 
 const config = [
   {
@@ -16,12 +17,9 @@ const config = [
       },
     ],
     plugins: [
+      resolve(),
+      commonjs(),
       typescript(),
-      copy({
-        targets: [
-          { src: 'src/styles.css', dest: 'dist' }
-        ]
-      })
     ],
     external: ['react', 'react-dom', 'tailwindcss', 'tailwindcss/colors'],
   },
