@@ -76,7 +76,7 @@ async function handleGithubInstall(input: string) {
 
   const [_, owner, repo, ...pathParts] = parts;
   const filePath = pathParts.join('/');
-  await installFromGithub(`github/${owner}/${repo}`, filePath, filePath);
+  await installFromGithub(`github/${owner}/${repo}/components`, filePath, filePath);
 }
 
 async function installFromNpm(packageName: string) {
