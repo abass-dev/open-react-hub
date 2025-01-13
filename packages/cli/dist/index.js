@@ -2,9 +2,10 @@
 import { Command } from 'commander';
 import chalk from 'chalk';
 import { add } from './commands/add.js';
+import { getVersion } from './version.js';
 const program = new Command();
 program
-    .version('1.0.0')
+    .version(getVersion())
     .description('OpenReactHub CLI - Manage React components and utilities');
 program
     .command('add <component...>')

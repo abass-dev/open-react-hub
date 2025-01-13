@@ -9,7 +9,7 @@
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
-    "publish-registry": "node scripts/publish-registry.js",
+    "publish-registry": "node scripts/publish-registry.mjs",
     "publish-cli": "node scripts/publish-cli.mjs cli",
     "publish-button": "node scripts/publish-package.mjs button"
   },
