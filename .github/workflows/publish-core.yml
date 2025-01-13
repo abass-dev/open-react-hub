@@ -1,0 +1,42 @@
+name: Publish CORE to npm
+
+on:
+  push:
+    paths:
+      - 'packages/core/package.json'
+
+jobs:
+  publish:
+    name: Publish CORE
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Checkout the repository
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.PAT_TOKEN }}
+
+    # 2. Setup Node.js
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18 # Use the desired Node.js version
+        registry-url: 'https://registry.npmjs.org'
+        cache: 'npm'
+
+    # 3. Install dependencies
+    - name: Install dependencies
+      run: npm install
+
+    # 4. Build the CORE package
+    - name: Build CORE package
+      working-directory: packages/core
+      run: npm run build
+
+    # 5. Publish the CORE package to npm
+    - name: Publish CORE package
+      working-directory: packages/core
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      run: npm publish --access public
