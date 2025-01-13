@@ -1,3 +1,4 @@
+// src/commands/create.ts
 import { Command } from 'commander';
 import { execSync } from 'child_process';
 import fs from 'fs-extra';
@@ -79,4 +80,3 @@ export default function Home() {
     console.log(`  cd ${projectName}`);
     console.log('  npm run dev');
   });
-
