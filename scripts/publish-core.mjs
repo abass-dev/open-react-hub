@@ -6,7 +6,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 function publishCli() {
-  const cliPath = path.join(__dirname, '..', 'packages', 'open-react-hub-core');
+  const cliPath = path.join(__dirname, '..', 'packages', 'core');
   console.log('Building Core components for OpenReactHub package...');
   execSync('npm run build', { cwd: cliPath, stdio: 'inherit' });
 
