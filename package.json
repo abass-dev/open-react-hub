@@ -10,7 +10,8 @@
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "publish-registry": "node scripts/publish-registry.mjs",
-    "publish-cli": "node scripts/publish-cli.mjs cli",
+    "publish-cli": "node scripts/publish-cli.mjs",
+    "publish-core": "node scripts/publish-core.mjs",
     "publish-button": "node scripts/publish-package.mjs button"
   },
   "devDependencies": {

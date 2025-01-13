@@ -1,0 +1,52 @@
+{
+  "name": "@open-react-hub/core",
+  "version": "0.1.1",
+  "description": "Core components for OpenReactHub",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rollup -c",
+    "test": "jest",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "react",
+    "components",
+    "ui"
+  ],
+  "author": "Aabass Dev abassthedev@gmail.com",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.18.0"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "tailwindcss": "^3.3.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^8.3.1",
+    "@tailwindcss/aspect-ratio": "^0.4.2",
+    "@tailwindcss/forms": "^0.5.3",
+    "@tailwindcss/typography": "^0.5.9",
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.0.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "jest": "^27.5.1",
+    "rollup": "^2.70.1",
+    "tailwindcss": "^3.3.0",
+    "tslib": "^2.3.1",
+    "typescript": "^4.5.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/abass-dev/open-react-hub.git",
+    "directory": "packages/open-react-hub-core"
+  }
+}
+

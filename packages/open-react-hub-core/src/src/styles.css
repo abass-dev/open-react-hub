@@ -1,0 +1,16 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* Add any custom styles here */
+.orh-btn {
+  @apply px-4 py-2 rounded font-semibold transition-colors duration-200;
+}
+
+.orh-btn-primary {
+  @apply bg-primary-500 text-white hover:bg-primary-600;
+}
+
+.orh-btn-secondary {
+  @apply bg-secondary-200 text-secondary-800 hover:bg-secondary-300;
+}
