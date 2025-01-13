@@ -2,9 +2,8 @@
 import { Command } from 'commander';
 import chalk from 'chalk';
 import { add } from './commands/add.js';
-import { createCommand } from './commands/create.js';
-
 import { getVersion } from './version.js';
+import { createCommand } from './commands/create.js'; // Import createCommand
 
 const program = new Command();
 
@@ -12,11 +11,10 @@ program
   .version(getVersion())
   .description('OpenReactHub CLI - Manage React components and utilities');
 
-program
-  .command('create <project-name>')
-  .description('Create a new OpenReactHub project')
-  .action(createCommand.action); // Use createCommand's action directly
+// Register createCommand
+program.addCommand(createCommand); // Add the command as is
 
+// Add the add command
 program
   .command('add <component...>')
   .description('Add a component to your project (npm package or GitHub path)')
@@ -24,8 +22,7 @@ program
   .action((componentParts) => {
     const fullComponentPath = componentParts.join(' ');
     add(fullComponentPath)
-      .then(() => {
-      })
+      .then(() => {})
       .catch((error) => {
         console.error(chalk.red('Error adding component:'), error.message);
         process.exit(1);
@@ -42,4 +39,3 @@ program.parse(process.argv);
 if (!process.argv.slice(2).length) {
   program.outputHelp();
 }
-
