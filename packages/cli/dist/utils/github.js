@@ -13,7 +13,12 @@ export function downloadFile({ owner, repo, path, destination }) {
     return __awaiter(this, void 0, void 0, function* () {
         const url = `https://raw.githubusercontent.com/${owner}/${repo}/main/${path}`;
         try {
-            const response = yield fetch(url);
+            console.log(`Downloading from: ${url}`);
+            const response = yield fetch(url, {
+                headers: {
+                    'Accept': 'application/vnd.github.v3.raw'
+                }
+            });
             if (!response.ok) {
                 throw new Error(`Failed to download file: ${response.statusText}`);
             }
@@ -22,12 +27,11 @@ export function downloadFile({ owner, repo, path, destination }) {
         }
         catch (error) {
             if (error instanceof Error) {
-                console.log(error.message);
+                throw new Error(`Error downloading file from GitHub: ${error.message}`);
             }
             else {
-                console.log('An unknown error occurred while installing the component.');
+                throw new Error('An unknown error occurred while downloading the component.');
             }
-            process.exit(1);
         }
     });
 }

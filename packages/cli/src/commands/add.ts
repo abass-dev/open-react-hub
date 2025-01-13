@@ -18,8 +18,9 @@ interface ComponentInfo {
 
 export async function add(componentPath: string) {
   try {
-    // Check if it's a GitHub path
-    if (componentPath.startsWith('github/')) {
+    // Check if it's a GitHub path (either full or short syntax)
+    if (componentPath.startsWith('github')) {
+      console.log(`Check if it's a GitHub path (either full or short syntax): Full ${componentPath}`)
       await handleGithubInstall(componentPath);
       return;
     }
@@ -40,8 +41,8 @@ export async function add(componentPath: string) {
       await installFromNpm(componentInfo.name);
     } 
     // Fallback to GitHub if available
-    else if (componentInfo.github && componentInfo.file) {
-      await installFromGithub(componentInfo.github, componentInfo.file, componentPath);
+    else if (componentInfo.github) {
+      await installFromGithub(componentInfo.github, componentPath);
     }
     else {
       console.error(chalk.red('No installation source found for this component.'));
@@ -67,41 +68,68 @@ export async function add(componentPath: string) {
 }
 
 async function handleGithubInstall(input: string) {
-  // Format: github/owner/repo/path/to/component
-  const parts = input.split('/');
-  if (parts.length < 4) {
-    console.error(chalk.red('Invalid GitHub path. Format: github/owner/repo/path/to/component'));
+  let owner = 'abass-dev'; // Default values for owner and repo
+  let repo = 'open-react-hub';
+  let componentPath: string;
+
+  // Remove 'github' prefix and trim
+  const cleanInput = input.replace(/^github\/?/, '').trim();
+
+  // Check if it's the full format (owner/repo/path/to/component)
+  if (cleanInput.includes('/')) {
+    const parts = cleanInput.split('/');
+    if (parts.length >= 3) {
+      owner = parts[0];
+      repo = parts[1];
+      componentPath = parts.slice(2).join('/');
+    } else {
+      componentPath = cleanInput;
+    }
+  } else {
+    // It's the short format (path/to/component)
+    componentPath = cleanInput;
+  }
+
+  if (!componentPath) {
+    console.error(chalk.red('Invalid component path. Please specify the path to the component.'));
     return;
   }
 
-  const [_, owner, repo, ...pathParts] = parts;
-  const filePath = pathParts.join('/');
-  await installFromGithub(`github/${owner}/${repo}`, filePath, filePath);
+  console.log(chalk.blue(`Installing from GitHub...`));
+  console.log(chalk.blue(`Owner: ${owner}, Repo: ${repo}, Path: ${componentPath}`));
+  // Call the install method with the parsed owner/repo and componentPath
+  await installFromGithub(`${owner}/${repo}`, componentPath);
 }
+
+
 
 async function installFromNpm(packageName: string) {
   console.log(chalk.blue(`Installing ${packageName} from npm...`));
   execSync(`npm install ${packageName}`, { stdio: 'inherit' });
 }
 
-async function installFromGithub(repoPath: string, filePath: string, componentPath: string) {
+async function installFromGithub(repoPath: string, componentPath: string) {
   console.log(chalk.blue(`Installing from GitHub...`));
-  const [_, owner, repo] = repoPath.split('/');
+  const [owner, repo] = repoPath.split('/');
 
   try {
-    // Create components directory structure
+    // Construct the GitHub file path
+    const githubFilePath = `components/${componentPath}.tsx`;
+    console.log(chalk.blue(`Fetching from: ${githubFilePath}`));
+
+    // Create components directory structure in user's project
     const componentsDir = path.join(process.cwd(), 'components');
     const componentDir = path.join(componentsDir, path.dirname(componentPath));
     await fs.ensureDir(componentDir);
 
     // Download the file
-    const fileName = path.basename(filePath);
+    const fileName = `${path.basename(componentPath)}.tsx`;
     const destinationPath = path.join(componentDir, fileName);
     
     await downloadFile({
       owner,
       repo,
-      path: filePath,
+      path: githubFilePath,
       destination: destinationPath
     });
 
@@ -110,6 +138,10 @@ async function installFromGithub(repoPath: string, filePath: string, componentPa
   } catch (error: unknown) {
     if (error instanceof Error) {
       console.error(chalk.red('Error downloading component:'), error.message);
+      console.error(chalk.yellow('\nNote: Make sure the component path is correct.'));
+      console.error(chalk.yellow('Examples:'));
+      console.error(chalk.yellow('  npx @open-react-hub/cli add github ui/split-text'));
+      console.error(chalk.yellow('  npx @open-react-hub/cli add github/owner/repo/ui/split-text'));
     } else {
       console.error(chalk.red('An unknown error occurred while downloading the component.'));
     }

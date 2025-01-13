@@ -7,7 +7,21 @@
         "version": "1.0.0",
         "npm": "https://www.npmjs.com/package/@open-react-hub/button",
         "github": "github/abass-dev/open-react-hub",
-        "file": "packages/button/src/Button.tsx",
+        "file": "components/ui/button.tsx",
+        "author": "abass-dev",
+        "tags": [
+          "ui",
+          "button",
+          "react"
+        ]
+      },
+      "split-text": {
+        "name": "@open-react-hub/split-text",
+        "description": "A customizable button component with primary and secondary variants",
+        "version": "1.0.0",
+        "npm": "https://www.npmjs.com/package/@open-react-hub/split-text",
+        "github": "github/abass-dev/open-react-hub",
+        "file": "components/ui/split-text.tsx",
         "author": "abass-dev",
         "tags": [
           "ui",

@@ -12,7 +12,12 @@ export async function downloadFile({ owner, repo, path, destination }: DownloadO
   const url = `https://raw.githubusercontent.com/${owner}/${repo}/main/${path}`;
   
   try {
-    const response = await fetch(url);
+    console.log(`Downloading from: ${url}`);
+    const response = await fetch(url, {
+      headers: {
+        'Accept': 'application/vnd.github.v3.raw'
+      }
+    });
     
     if (!response.ok) {
       throw new Error(`Failed to download file: ${response.statusText}`);
@@ -22,11 +27,10 @@ export async function downloadFile({ owner, repo, path, destination }: DownloadO
     await fs.writeFile(destination, content, 'utf8');
   } catch (error: unknown) {
     if (error instanceof Error) {
-      console.log(error.message);
+      throw new Error(`Error downloading file from GitHub: ${error.message}`);
     } else {
-      console.log('An unknown error occurred while installing the component.');
+      throw new Error('An unknown error occurred while downloading the component.');
     }
-    process.exit(1);
   }
 }
 
