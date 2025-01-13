@@ -1,6 +1,6 @@
 {
   "name": "@open-react-hub/core",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Core components for OpenReactHub",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
