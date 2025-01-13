@@ -18,7 +18,6 @@ program
     const fullComponentPath = componentParts.join(' ');
     add(fullComponentPath)
       .then(() => {
-        console.log(chalk.green('Component added successfully!'));
       })
       .catch((error) => {
         console.error(chalk.red('Error adding component:'), error.message);

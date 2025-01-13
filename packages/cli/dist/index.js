@@ -15,7 +15,6 @@ program
     var fullComponentPath = componentParts.join(' ');
     add(fullComponentPath)
         .then(function () {
-        console.log(chalk.green('Component added successfully!'));
     })
         .catch(function (error) {
         console.error(chalk.red('Error adding component:'), error.message);
