@@ -2,7 +2,7 @@
 import { Command } from 'commander';
 import chalk from 'chalk';
 import { add } from './commands/add.js';
-import { create } from './commands/create.js';
+import { createCommand } from './commands/create.js';
 
 import { getVersion } from './version.js';
 
