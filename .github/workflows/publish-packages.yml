@@ -43,7 +43,7 @@ jobs:
         if: steps.check_version.outputs.version_changed == 'true'
         run: |
           cd packages/${{ matrix.package }}
-          npm ci
+          npm install
 
       - name: Publish package
         if: steps.check_version.outputs.version_changed == 'true'
