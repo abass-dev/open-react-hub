@@ -3,6 +3,7 @@
   "version": "1.0.19",
   "description": "A highly customizable and accessible button component for React applications",
   "main": "dist/index.js",
+  "type": "module",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
   "sideEffects": false,
