@@ -3,7 +3,7 @@ name: Publish CORE to npm
 on:
   push:
     paths:
-      - 'packages/core/package.json'
+      - 'packages/core'
 
 jobs:
   publish:
