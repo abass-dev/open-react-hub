@@ -1,7 +1,11 @@
 import type { Config } from 'tailwindcss'
 import colors from 'tailwindcss/colors'
+import formsPlugin from '@tailwindcss/forms'
+import typographyPlugin from '@tailwindcss/typography'
+import aspectRatioPlugin from '@tailwindcss/aspect-ratio'
 
 const openReactHubPreset: Config = {
+  content: [],  // This will be overridden by the user's config
   theme: {
     extend: {
       colors: {
@@ -25,9 +29,9 @@ const openReactHubPreset: Config = {
     },
   },
   plugins: [
-    require('@tailwindcss/forms'),
-    require('@tailwindcss/typography'),
-    require('@tailwindcss/aspect-ratio'),
+    formsPlugin,
+    typographyPlugin,
+    aspectRatioPlugin,
   ],
 }
 

@@ -12,7 +12,7 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
-    "types": ["react", "react-dom", "aria-query"]
+    "types": ["react", "react-dom", "node"]
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]
