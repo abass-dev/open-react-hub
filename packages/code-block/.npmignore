@@ -1,0 +1,13 @@
+src/
+tests/
+examples/
+.github/
+.vscode/
+.git/
+.gitignore
+.eslintrc
+.eslintignore
+jest.config.js
+tsconfig.json
+*.log
+*.tgz

@@ -17,16 +17,37 @@
       },
       "split-text": {
         "name": "@open-react-hub/split-text",
-        "description": "A customizable button component with primary and secondary variants",
+        "description": "A React component for animating text by splitting it into individual characters, part of the OpenReactHub library collection",
         "version": "1.0.0",
         "npm": "https://www.npmjs.com/package/@open-react-hub/split-text",
         "github": "github/abass-dev/open-react-hub",
         "file": "components/ui/split-text.tsx",
         "author": "abass-dev",
         "tags": [
-          "ui",
-          "button",
-          "react"
+          "react",
+          "text",
+          "animation",
+          "split",
+          "character",
+          "openreacthub"
+        ]
+      },
+      "code-block": {
+        "name": "@open-react-hub/code-block",
+        "description": "A feature-rich, customizable code block component for React applications with syntax highlighting, line numbers, and themes",
+        "version": "1.0.0",
+        "npm": "https://www.npmjs.com/package/@open-react-hub/code-block",
+        "github": "github/abass-dev/open-react-hub",
+        "file": "components/ui/code-block.tsx",
+        "author": "abass-dev",
+        "tags": [
+          "react",
+          "code-block",
+          "syntax-highlighting",
+          "terminal",
+          "command-line",
+          "prism",
+          "typescript"
         ]
       }
     }
