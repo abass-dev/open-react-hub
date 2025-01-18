@@ -1,1 +1,8 @@
 node_modules
+.turbo
+dist
+.next
+.env
+.env.*local
+.pnpm-store
+.pnpm-store/*

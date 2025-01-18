@@ -1,0 +1,11 @@
+# .dockerignore
+node_modules
+.next
+dist
+build
+.git
+.env*
+.dockerignore
+Dockerfile*
+docker-compose*
+README.md

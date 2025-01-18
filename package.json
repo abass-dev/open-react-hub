@@ -1,21 +1,22 @@
 {
   "name": "open-react-hub",
-  "version": "1.0.0",
   "private": true,
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "apps/*"
   ],
   "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev",
-    "lint": "turbo run lint",
-    "publish-registry": "node scripts/publish-registry.mjs",
-    "publish-cli": "node scripts/publish-cli.mjs",
-    "publish-core": "node scripts/publish-core.mjs",
-    "publish-button": "node scripts/publish-package.mjs button"
+    "dev": "pnpm --filter docs dev",
+    "build": "pnpm -r build",
+    "test": "pnpm -r test",
+    "lint": "pnpm -r lint"
   },
   "devDependencies": {
-    "turbo": "^1.10.0",
-    "fs-extra": "^11.1.0"
-  }
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "typescript": "^5.0.0",
+    "tsup": "^8.0.0",
+    "@changesets/cli": "^2.27.1"
+  },
+  "packageManager": "pnpm@8.9.0+sha512.ef8859938e1f0537b9fcf0309044311392f3b38b344176e6cd4fdee21b225524b0ac2a1b08ae2ae2ddd5b3ff4b8ca496d6778e950f3e7c9f555b81325982441c"
 }

@@ -1,3 +1,4 @@
+"use client"
 import React, { useState, useEffect } from 'react';
 import { Check, Copy, Terminal, Hash } from 'lucide-react';
 import Prism from 'prismjs';
