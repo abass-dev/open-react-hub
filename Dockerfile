@@ -13,7 +13,6 @@ WORKDIR /app
 COPY package.json pnpm-workspace.yaml ./
 COPY packages/button/package.json ./packages/button/package.json
 COPY packages/code-block/package.json ./packages/code-block/package.json
-COPY packages/split-text/package.json ./packages/split-text/package.json
 COPY apps/docs/package.json ./apps/docs/package.json
 
 # Install dependencies
@@ -26,7 +25,6 @@ WORKDIR /app
 # Copy deps
 COPY --from=deps /app/node_modules ./node_modules
 COPY --from=deps /app/packages/button/node_modules ./packages/button/node_modules
-COPY --from=deps /app/packages/split-text/node_modules ./packages/split-text/node_modules
 COPY --from=deps /app/packages/code-block/node_modules ./packages/code-block/node_modules
 COPY --from=deps /app/apps/docs/node_modules ./apps/docs/node_modules
 

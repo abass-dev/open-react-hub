@@ -12,7 +12,6 @@ WORKDIR /app
 # Copy configuration files
 COPY package.json pnpm-workspace.yaml ./
 COPY packages/button/package.json ./packages/button/package.json
-COPY packages/split-text/package.json ./packages/split-text/package.json
 COPY packages/code-block/package.json ./packages/code-block/package.json
 COPY apps/docs/package.json ./apps/docs/package.json
 

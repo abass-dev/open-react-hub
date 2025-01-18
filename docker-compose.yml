@@ -3,7 +3,7 @@ services:
   docs-dev:
     build:
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     ports:
       - "3000:3000"
     volumes:
@@ -11,7 +11,6 @@ services:
       - /app/node_modules
       - /app/packages/button/node_modules
       - /app/packages/code-block/node_modules
-      - /app/packages/split-text/node_modules
       - /app/apps/docs/node_modules
     environment:
       - NODE_ENV=development
