@@ -1,6 +1,6 @@
 {
   "name": "@open-react-hub/split-text",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A React component for animating text by splitting it into individual characters, part of the OpenReactHub library collection",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",

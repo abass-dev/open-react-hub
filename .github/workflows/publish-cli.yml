@@ -21,21 +21,26 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: 18 # Use the desired Node.js version
+        node-version: 20 # Use the desired Node.js version
         registry-url: 'https://registry.npmjs.org'
-
+       
+    - name: Install pnpm
+      run: |
+            corepack enable
+            corepack prepare pnpm@8.9.0 --activate
+  
     # 3. Install dependencies
     - name: Install dependencies
-      run: npm install
+      run: pnpm install
 
     # 4. Build the CLI package
     - name: Build CLI package
       working-directory: packages/cli
-      run: npm run build
+      run: pnpm run build
 
     # 5. Publish the CLI package to npm
     - name: Publish CLI package
       working-directory: packages/cli
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      run: npm publish --access public
+      run: pnpm publish --access public

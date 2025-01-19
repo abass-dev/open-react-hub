@@ -23,8 +23,13 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '18'
+          node-version: '20'
           registry-url: 'https://registry.npmjs.org'
+
+      - name: Install pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@8.9.0 --activate
 
       - name: Check if version changed
         id: check_version
@@ -48,13 +53,13 @@ jobs:
         if: steps.check_version.outputs.version_changed == 'true'
         run: |
           cd packages/${{ matrix.package }}
-          npm run build
+          pnpm build
             
       - name: Publish package
         if: steps.check_version.outputs.version_changed == 'true'
         run: |
           cd packages/${{ matrix.package }}
-          npm publish --access public
+          pnpm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
