@@ -1,5 +1,7 @@
+// CodeBlock.tsx
 "use client"
-import React, { useState, useEffect } from 'react';
+
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Check, Copy, Terminal, Hash } from 'lucide-react';
 import Prism from 'prismjs';
 import 'prismjs/themes/prism-tomorrow.css';
@@ -18,6 +20,18 @@ import 'prismjs/components/prism-bash';
 import 'prismjs/components/prism-markdown';
 import 'prismjs/components/prism-shell-session';
 
+// Constants
+const COPY_TIMEOUT = 2000;
+const DEFAULT_LANGUAGE = 'typescript';
+const DEFAULT_COMMAND_LINE = {
+    user: 'user',
+    host: 'localhost',
+    path: '~',
+    basePrompt: '',
+    continuationPrompt: '→ ',
+};
+
+// Types
 export interface LineConfig {
     content: string;
     isOutput?: boolean;
@@ -38,6 +52,7 @@ export interface CodeBlockProps {
     code: string;
     language?: string;
     showLineNumbers?: boolean;
+    showLineNumbersToggler?: boolean;
     showCopyButton?: boolean;
     showLanguageLabel?: boolean;
     theme?: 'light' | 'dark';
@@ -46,51 +61,57 @@ export interface CodeBlockProps {
     commandLine?: CommandLineConfig;
 }
 
-export const CodeBlock = ({
+// Theme configurations
+const themeConfig = {
+    background: {
+        light: 'bg-gray-50',
+        dark: 'bg-gray-900',
+    },
+    text: {
+        light: 'text-gray-800',
+        dark: 'text-gray-100',
+    },
+    lineNumber: {
+        light: 'text-gray-400',
+        dark: 'text-gray-500',
+    },
+} as const;
+
+export const CodeBlock: React.FC<CodeBlockProps> = ({
     code,
-    language = 'typescript',
+    language = DEFAULT_LANGUAGE,
     showLineNumbers: initialShowLineNumbers = true,
+    showLineNumbersToggler = false,
     showCopyButton = true,
     showLanguageLabel = true,
     theme = 'dark',
     className = '',
     isCommandLine = false,
-    commandLine = {
-        user: 'user',
-        host: 'localhost',
-        path: '~',
-        basePrompt: '',
-        continuationPrompt: '→ ',
-    },
-}: CodeBlockProps) => {
+    commandLine = DEFAULT_COMMAND_LINE,
+}) => {
     const [isCopied, setIsCopied] = useState(false);
-    const [processedCode, setProcessedCode] = useState('');
-    const [processedLines, setProcessedLines] = useState<LineConfig[]>([]);
     const [showLineNumbers, setShowLineNumbers] = useState(initialShowLineNumbers);
 
-    useEffect(() => {
-        if (isCommandLine) {
-            const lines = commandLine.lines || parseCodeIntoLines(code);
-            setProcessedLines(lines);
-            setProcessedCode(formatCommandLineCode(lines));
-        } else {
-            setProcessedCode(code);
+    // Process code lines
+    const { processedCode, processedLines } = useMemo(() => {
+        if (!isCommandLine) {
+            return { processedCode: code, processedLines: [] };
         }
-    }, [code, isCommandLine, commandLine]);
 
-    const parseCodeIntoLines = (code: string): LineConfig[] => {
-        return code.trim().split('\n').map(line => ({
+        const lines = commandLine.lines || code.trim().split('\n').map(line => ({
             content: line,
             isOutput: !line.startsWith('$') && !line.startsWith('>'),
             isContinuation: line.startsWith('>')
         }));
-    };
 
-    const formatCommandLineCode = (lines: LineConfig[]): string => {
-        return lines.map(line => line.content).join('\n');
-    };
+        return {
+            processedLines: lines,
+            processedCode: lines.map(line => line.content).join('\n')
+        };
+    }, [code, isCommandLine, commandLine]);
 
-    const handleCopy = async () => {
+    // Handle copy functionality
+    const handleCopy = useCallback(async () => {
         const textToCopy = isCommandLine
             ? processedLines
                 .filter(line => !line.isOutput)
@@ -100,18 +121,16 @@ export const CodeBlock = ({
 
         await navigator.clipboard.writeText(textToCopy);
         setIsCopied(true);
-        setTimeout(() => setIsCopied(false), 2000);
-    };
+        setTimeout(() => setIsCopied(false), COPY_TIMEOUT);
+    }, [code, isCommandLine, processedLines]);
 
-    const toggleLineNumbers = () => {
-        setShowLineNumbers(!showLineNumbers);
-    };
+    // Handle line numbers toggle
+    const toggleLineNumbers = useCallback(() => {
+        setShowLineNumbers(prev => !prev);
+    }, []);
 
-    useEffect(() => {
-        Prism.highlightAll();
-    }, [processedCode, language, isCommandLine]);
-
-    const getPrompt = (line: LineConfig, index: number) => {
+    // Get command line prompt
+    const getPrompt = useCallback((line: LineConfig) => {
         if (line.customPrompt) return line.customPrompt;
         if (line.isOutput) return '';
         if (line.isContinuation) return commandLine.continuationPrompt || '→ ';
@@ -119,101 +138,106 @@ export const CodeBlock = ({
         const { user, host, path, basePrompt } = commandLine;
         if (basePrompt) return basePrompt;
         return `[${user}@${host} ${path}]$`;
-    };
+    }, [commandLine]);
 
-    const backgroundColors = {
-        light: 'bg-gray-50',
-        dark: 'bg-gray-900',
-    };
+    // Syntax highlighting
+    useEffect(() => {
+        Prism.highlightAll();
+    }, [processedCode, language, isCommandLine]);
 
-    const textColors = {
-        light: 'text-gray-800',
-        dark: 'text-gray-100',
-    };
+    // Render header buttons
+    const renderHeaderButtons = () => (
+        <div className="flex items-center gap-2">
+            {showLineNumbersToggler && (
+                <button
+                    onClick={toggleLineNumbers}
+                    className={`p-1.5 rounded-md transition-colors
+                        ${theme === 'light' ? 'hover:bg-gray-200' : 'hover:bg-gray-700'}
+                        ${showLineNumbers ? 'text-blue-500' : themeConfig.text[theme]}`}
+                    title="Toggle line numbers"
+                >
+                    <Hash size={16} />
+                </button>
+            )}
+            {showCopyButton && (
+                <button
+                    onClick={handleCopy}
+                    className={`p-1.5 rounded-md transition-colors
+                        ${theme === 'light' ? 'hover:bg-gray-200' : 'hover:bg-gray-700'}`}
+                >
+                    {isCopied ? (
+                        <Check size={16} className="text-green-500" />
+                    ) : (
+                        <Copy size={16} className={themeConfig.text[theme]} />
+                    )}
+                </button>
+            )}
+        </div>
+    );
 
-    const lineNumberColors = {
-        light: 'text-gray-400',
-        dark: 'text-gray-500',
-    };
-
-    return (
-        <div className={`rounded-lg overflow-hidden ${backgroundColors[theme]} ${className} max-w-full`}>
-            {/* Header */}
-            <div className="flex items-center justify-between px-4 py-2 border-b border-gray-700">
-                <div className="flex items-center gap-2">
-                    <Terminal size={16} className={textColors[theme]} />
-                    {showLanguageLabel && (
-                        <span className={`text-sm font-medium ${textColors[theme]}`}>
-                            {isCommandLine ? 'Terminal' : language.charAt(0).toUpperCase() + language.slice(1)}
+    // Render command line content
+    const renderCommandLine = () => (
+        <pre className={`font-mono text-sm p-4 ${theme === 'dark' ? 'prism-dark' : 'prism-light'} min-w-0`}>
+            {processedLines.map((line, index) => (
+                <div
+                    key={index}
+                    className={`flex min-w-0 ${line.isOutput ? 'opacity-80' : ''}`}
+                >
+                    {showLineNumbers && (
+                        <span className={`flex-none mr-4 min-w-[2rem] text-right ${themeConfig.lineNumber[theme]} opacity-60`}>
+                            {index + 1}
                         </span>
                     )}
+                    <span className={`flex-none mr-4 ${theme === 'light' ? 'text-gray-500' : 'text-gray-400'}`}>
+                        {getPrompt(line)}
+                    </span>
+                    <span className={`break-all sm:break-normal ${themeConfig.text[theme]}`}>
+                        {line.content.replace(/^\$\s*/, '')}
+                    </span>
                 </div>
-                <div className="flex items-center gap-2">
-                    <button
-                        onClick={toggleLineNumbers}
-                        className={`p-1.5 rounded-md transition-colors
-              ${theme === 'light' ? 'hover:bg-gray-200' : 'hover:bg-gray-700'}
-              ${showLineNumbers ? 'text-blue-500' : textColors[theme]}`}
-                        title="Toggle line numbers"
-                    >
-                        <Hash size={16} />
-                    </button>
-                    {showCopyButton && (
-                        <button
-                            onClick={handleCopy}
-                            className={`p-1.5 rounded-md transition-colors
-                ${theme === 'light' ? 'hover:bg-gray-200' : 'hover:bg-gray-700'}`}
-                        >
-                            {isCopied ? (
-                                <Check size={16} className="text-green-500" />
-                            ) : (
-                                <Copy size={16} className={textColors[theme]} />
-                            )}
-                        </button>
-                    )}
-                </div>
-            </div>
+            ))}
+        </pre>
+    );
 
-            {/* Code Content */}
-            <div className="relative w-full">
-                <div className="overflow-x-auto">
-                    {isCommandLine ? (
-                        <pre className={`font-mono text-sm p-4 min-w-full ${theme === 'dark' ? 'prism-dark' : 'prism-light'}`}>
-                            {processedLines.map((line, index) => (
-                                <div
-                                    key={index}
-                                    className={`flex ${line.isOutput ? 'opacity-80' : ''} whitespace-pre`}
-                                >
-                                    {showLineNumbers && (
-                                        <span className={`select-none mr-4 w-8 text-right ${lineNumberColors[theme]} opacity-60`}>
-                                            {index + 1}
-                                        </span>
-                                    )}
-                                    <span className={`select-none mr-4 ${theme === 'light' ? 'text-gray-500' : 'text-gray-400'}`}>
-                                        {getPrompt(line, index)}
-                                    </span>
-                                    <span className={textColors[theme]}>
-                                        {line.content.replace(/^\$\s*/, '')}
-                                    </span>
-                                </div>
-                            ))}
-                        </pre>
-                    ) : (
-                        <div className="flex min-w-full">
-                            {showLineNumbers && (
-                                <div className={`select-none pt-4 pl-4 ${lineNumberColors[theme]} opacity-60 text-right`}>
-                                    {processedCode.split('\n').map((_, i) => (
-                                        <div key={i} className="px-2">
-                                            {i + 1}
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-                            <pre className={`language-${language} font-mono text-sm p-4 flex-1 ${theme === 'dark' ? 'prism-dark' : 'prism-light'}`}>
-                                <code>{processedCode}</code>
-                            </pre>
+    // Render code content
+    const renderCode = () => (
+        <div className="flex min-w-0">
+            {showLineNumbers && (
+                <div className={`flex-none pt-4 pl-4 ${themeConfig.lineNumber[theme]} opacity-60 text-right min-w-[3rem]`}>
+                    {processedCode.split('\n').map((_, i) => (
+                        <div key={i} className="px-2">
+                            {i + 1}
                         </div>
-                    )}
+                    ))}
+                </div>
+            )}
+            <pre className={`language-${language} font-mono text-sm p-4 overflow-x-auto min-w-0 w-full ${theme === 'dark' ? 'prism-dark' : 'prism-light'}`}>
+                <code className="break-all sm:break-normal">{processedCode}</code>
+            </pre>
+        </div>
+    );
+
+    return (
+        <div className="max-w-[100vw] overflow-hidden">
+            <div className={`rounded-lg ${themeConfig.background[theme]} ${className} w-full`}>
+                {/* Header */}
+                <div className="flex items-center justify-between px-4 py-2 border-b border-gray-700">
+                    <div className="flex items-center gap-2">
+                        <Terminal size={16} className={themeConfig.text[theme]} />
+                        {showLanguageLabel && (
+                            <span className={`text-sm font-medium ${themeConfig.text[theme]}`}>
+                                {isCommandLine ? 'Terminal' : language.charAt(0).toUpperCase() + language.slice(1)}
+                            </span>
+                        )}
+                    </div>
+                    {renderHeaderButtons()}
+                </div>
+
+                {/* Code Content */}
+                <div className="max-w-[100vw] overflow-hidden">
+                    <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-transparent">
+                        {isCommandLine ? renderCommandLine() : renderCode()}
+                    </div>
                 </div>
             </div>
         </div>

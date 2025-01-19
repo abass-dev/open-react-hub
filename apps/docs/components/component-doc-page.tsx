@@ -39,21 +39,21 @@ export default function ComponentDocPage({
     props = [],
 }: ComponentDocPageProps) {
     return (
-        <div className="container mx-auto py-6 px-6 lg:py-10">
-            <div className="flex flex-col gap-4">
+        <div className="flex justify-center flex-col overflow-hidden">
+          <div className="flex flex-col px-3 gap-4">
                 <h1 className="text-4xl font-bold lg:text-5xl">{title}</h1>
                 <p className="text-xl text-muted-foreground">{description}</p>
             </div>
 
-            <Tabs defaultValue="preview" className="mt-8">
+            <Tabs defaultValue="preview" className="mt-8 max-w-[100vw] px-3 overflow-hidden">
                 <TabsList className="grid w-full grid-cols-3">
                     <TabsTrigger value="preview">Preview</TabsTrigger>
                     <TabsTrigger value="installation">Installation</TabsTrigger>
                     <TabsTrigger value="usage">Usage</TabsTrigger>
                 </TabsList>
 
-                <TabsContent value="preview" className="mt-6">
-                    <Card>
+                <TabsContent value="preview" className="mt-6 max-w-[100vw] overflow-hidden">
+                    <Card className="overflow-hidden">
                         <CardHeader>
                             <CardTitle>Live Preview</CardTitle>
                             <CardDescription>Experiment with the component using the controls below</CardDescription>
@@ -64,25 +64,25 @@ export default function ComponentDocPage({
                     </Card>
                 </TabsContent>
 
-                <TabsContent value="installation" className="mt-6">
-                    <Card>
-                        <CardHeader>
+                <TabsContent value="installation" className="mt-6 max-w-[100vw] overflow-hidden">
+               <Card className="overflow-hidden">
+                        <CardHeader className="max-w-[100vw] overflow-hidden">
                             <CardTitle>Installation</CardTitle>
                             <CardDescription>Install the component and its dependencies</CardDescription>
                         </CardHeader>
-                        <CardContent>
+                        <CardContent className="max-w-[100vw] overflow-hidden">
                             <CodeBlock code={installCommand} isCommandLine />
                         </CardContent>
                     </Card>
                 </TabsContent>
 
-                <TabsContent value="usage" className="mt-6">
-                    <Card>
+                <TabsContent value="usage" className="mt-6 max-w-[100vw] overflow-hidden">
+                    <Card className="overflow-hidden">
                         <CardHeader>
                             <CardTitle>Usage</CardTitle>
                             <CardDescription>Learn how to use the component in your project</CardDescription>
                         </CardHeader>
-                        <CardContent className="space-y-4">
+                        <CardContent className="space-y-4 overflow-hidden">
                             <p className="text-sm text-muted-foreground">Here's a basic example of how to use the component:</p>
                             <CodeBlock code={usageCode} language="jsx" />
 
@@ -106,7 +106,7 @@ export default function ComponentDocPage({
                 </TabsContent>
             </Tabs>
 
-            <div className="mt-12 grid gap-6 md:grid-cols-2">
+            <div className="mt-12 max-w-[100vw] px-3 overflow-hidden grid gap-6 md:grid-cols-2">
                 <Card>
                     <CardHeader>
                         <CardTitle>Explore More Components</CardTitle>

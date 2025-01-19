@@ -1,5 +1,6 @@
 import ComponentDocPage from '@/components/component-doc-page'
 import { SplitTextPreview } from '@/components/split-text-preview'
+import CodeBlock from '@open-react-hub/code-block'
 
 const splitTextProps = [
     {
@@ -23,6 +24,7 @@ const splitTextProps = [
 
 export default function SplitTextPage() {
     return (
+    <div className="container mx-auto py-6 lg:py-10">
         <ComponentDocPage
             title="Split Text Component"
             description="A customizable React component for splitting and animating text."
@@ -41,5 +43,6 @@ function MyComponent() {
                 description: 'Documentation for the Split Text component in OpenReactHub'
             }}
         />
+        </div>
     )
 }

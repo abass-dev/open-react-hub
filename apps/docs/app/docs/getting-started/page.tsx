@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import CodeBlock from '@/components/code-block'
+import CodeBlock from '@open-react-hub/code-block'
 
 export const metadata: Metadata = {
   title: 'Getting Started | OpenReactHub',
@@ -12,20 +12,22 @@ export const metadata: Metadata = {
 
 export default function GettingStartedPage() {
   return (
-    <div className="container mx-auto py-6 px-4 md:px-6 lg:py-10">
-      <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-4">Getting Started with OpenReactHub</h1>
-      <p className="text-xl text-muted-foreground mb-8">
+        <div className="container mx-auto">
+        <div className="max-w-[100vw] overflow-hidden flex justify-center flex-col overflow-hidden">
+          <div className="flex flex-col px-3 gap-4">
+          <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-4">Getting Started with OpenReactHub</h1>
+         <p className="text-xl text-muted-foreground mb-8">
         Welcome to OpenReactHub! This guide will help you set up and start using our open-source React and Next.js component library in your projects.
-      </p>
-
-      <Tabs defaultValue="quickstart" className="space-y-8">
+       </p>
+</div>
+      <Tabs defaultValue="quickstart" className="space-y-8 max-w-[100vw] overflow-hidden px-3">
         <TabsList>
           <TabsTrigger value="quickstart">Quickstart</TabsTrigger>
           <TabsTrigger value="manual-setup">Manual Setup</TabsTrigger>
           <TabsTrigger value="next-steps">Next Steps</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="quickstart" className="space-y-4">
+        <TabsContent value="quickstart" className="space-y-4 max-w-[100vw] overflow-hidden">
           <h2 className="text-2xl font-bold">Quickstart</h2>
           <p>The fastest way to get started with OpenReactHub is to use our CLI tool. Follow these steps:</p>
 
@@ -34,7 +36,8 @@ export default function GettingStartedPage() {
               <p>Install the OpenReactHub CLI globally:</p>
               <CodeBlock
                 code="npm install -g @open-react-hub/cli"
-                language="bash"
+                isCommandLine
+                showLineNumbers={false}
               />
             </li>
             <li>
@@ -179,7 +182,7 @@ export default function MyComponent() {
         </TabsContent>
       </Tabs>
 
-      <div className="mt-12 grid gap-6 md:grid-cols-2">
+      <div className="mt-12 px-3 grid gap-6 md:grid-cols-2">
         <div className="rounded-lg border p-6">
           <h3 className="text-xl font-semibold mb-2">Explore Components</h3>
           <p className="text-muted-foreground mb-4">Discover the full range of components available in OpenReactHub.</p>
@@ -201,6 +204,7 @@ export default function MyComponent() {
           </Button>
         </div>
       </div>
+    </div>
     </div>
   )
 }
