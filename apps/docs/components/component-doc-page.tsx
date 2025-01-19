@@ -39,7 +39,7 @@ export default function ComponentDocPage({
     props = [],
 }: ComponentDocPageProps) {
     return (
-        <div className="container mx-auto py-6 px-4 md:px-6 lg:py-10">
+        <div className="container mx-auto py-6 px-6 lg:py-10">
             <div className="flex flex-col gap-4">
                 <h1 className="text-4xl font-bold lg:text-5xl">{title}</h1>
                 <p className="text-xl text-muted-foreground">{description}</p>

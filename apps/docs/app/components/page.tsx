@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
-import { ArrowRight, TextIcon } from 'lucide-react'
+import { ArrowRight, CodeSquareIcon, TextIcon } from 'lucide-react'
 
 export const metadata: Metadata = {
     title: 'Components | OpenReactHub',
@@ -11,6 +11,7 @@ export const metadata: Metadata = {
 
 const components = [
     { name: 'Text Animations', description: 'Components for animating and manipulating text.', icon: TextIcon, url: '/components/text-animations/split-text' },
+    { name: 'Code Block', description: 'A feature-rich, customizable code block component for React applications with syntax highlighting, line numbers, and themes', icon: CodeSquareIcon, url: '/components/code-block' },
 ]
 
 export default function ComponentsPage() {

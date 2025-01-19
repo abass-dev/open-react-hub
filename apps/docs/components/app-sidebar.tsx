@@ -3,7 +3,7 @@
 import * as React from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Package, FileText, Cpu, Lightbulb, Terminal, Code, Search, TextIcon, LucideProps, Code2 } from 'lucide-react'
+import { Package, FileText, Cpu, Lightbulb, Terminal, Code, Search, TextIcon, CodeSquareIcon } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import {
@@ -36,7 +36,7 @@ const componentsNavItems = [
   {
     title: 'Others',
     items: [
-      { title: 'Code Block', url: '/components/code-block', icon: Code2 },
+      { title: 'Code Block', url: '/components/code-block', icon: CodeSquareIcon },
     ]
   },
 ]
@@ -48,7 +48,7 @@ export function AppSidebar() {
   const toggleMobileSidebar = () => setMobileOpen((prev) => !prev)
 
   return (
-    <Sidebar className="h-full" side="right">
+    <Sidebar className="h-full" collapsible='none' side="right">
       <SidebarHeader className="border-b px-6 py-3 flex justify-between items-center">
         <Link href="/" className="flex items-center gap-2" aria-label="Go to OpenReactHub home">
           <Package className="h-6 w-6 text-primary" />
