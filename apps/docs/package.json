@@ -9,7 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@open-react-hub/*": "workspace:*",
+    "@open-react-hub/button": "workspace:*",
+    "@open-react-hub/cli": "workspace:*",
+    "@open-react-hub/split-text": "workspace:*",
+    "@open-react-hub/code-block": "workspace:*",
+    "@open-react-hub/core": "workspace:*",
     "@radix-ui/react-collapsible": "^1.1.2",
     "@radix-ui/react-dialog": "^1.1.4",
     "@radix-ui/react-dropdown-menu": "^2.1.4",
