@@ -23,7 +23,7 @@ npx jsrepo add github/abass-dev/open-react-hub/text-animations/split-text
 
 ## Documentation
 
-Visit our documentation at [docs.openreacthub.dev](https://docs.openreacthub.dev)
+Visit our documentation at [orh.abassdev.com](https://orh.abassdev.com)
 
 ## Contributing
 
