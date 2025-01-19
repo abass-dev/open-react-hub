@@ -1,0 +1,55 @@
+{
+  "name": "@open-react-hub/split-text",
+  "version": "1.0.2",
+  "description": "A React component for animating text by splitting it into individual characters, part of the OpenReactHub library collection",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "rollup -c",
+    "test": "jest",
+    "prepublishOnly": "npm run build",
+    "lint": "eslint 'src/**/*.{js,ts,tsx}'",
+    "format": "prettier --write 'src/**/*.{js,ts,tsx}'"
+  },
+  "keywords": [
+    "react",
+    "text",
+    "animation",
+    "split",
+    "character",
+    "openreacthub"
+  ],
+  "author": "Abass Dev",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/abass-dev/open-react-hub-split-text.git"
+  },
+  "bugs": {
+    "url": "https://github.com/abass-dev/open-react-hub-split-text/issues"
+  },
+  "homepage": "https://github.com/abass-dev/open-react-hub-split-text/#readme",
+  "peerDependencies": {
+    "@react-spring/web": "^9.0.0",
+    "react": "^17.0.0 || ^18.0.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^22.0.2",
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "@rollup/plugin-terser": "^0.4.0",
+    "@rollup/plugin-typescript": "^8.5.0",
+    "@types/react": "^18.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.30.0",
+    "@typescript-eslint/parser": "^5.30.0",
+    "eslint": "^8.18.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-react": "^7.30.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "jest": "^28.1.2",
+    "prettier": "^2.7.1",
+    "rollup": "^2.79.2",
+    "tslib": "^2.4.0",
+    "typescript": "^4.9.5"
+  }
+}

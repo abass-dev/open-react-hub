@@ -9,11 +9,9 @@ RUN corepack enable && corepack prepare pnpm@8.9.0 --activate
 FROM base AS deps
 WORKDIR /app
 
-# Copy configuration files
-COPY package.json pnpm-workspace.yaml ./
-COPY packages/button/package.json ./packages/button/package.json
-COPY packages/code-block/package.json ./packages/code-block/package.json
-COPY apps/docs/package.json ./apps/docs/package.json
+# Copy package.json files from apps and packages directories
+COPY apps/*/package.json ./apps/
+COPY packages/*/package.json ./packages/
 
 # Install dependencies
 RUN pnpm install
@@ -24,9 +22,8 @@ WORKDIR /app
 
 # Copy deps
 COPY --from=deps /app/node_modules ./node_modules
-COPY --from=deps /app/packages/button/node_modules ./packages/button/node_modules
-COPY --from=deps /app/packages/code-block/node_modules ./packages/code-block/node_modules
-COPY --from=deps /app/apps/docs/node_modules ./apps/docs/node_modules
+COPY --from=deps /app/packages/*/node_modules ./packages/
+COPY --from=deps /app/apps/*/node_modules ./apps/
 
 # Copy source code
 COPY . .
