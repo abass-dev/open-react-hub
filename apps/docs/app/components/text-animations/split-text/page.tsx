@@ -91,6 +91,31 @@ export default function SplitTextDocPage() {
             title="Split Text Component"
             description="A customizable React component for splitting and animating text."
             installCommand="npm install @open-react-hub/split-text @react-spring/web"
+            alternativeInstallationCommands={[
+    {
+        name: 'Using ORH CLI',
+        description:
+            'This command attempts to install the package using npm. If npm installation fails, it will fall back to GitHub. If both methods fail, the ORH CLI will throw an error exception, providing details about the issue.',
+        installCommand: 'orh add ui/split-text',
+    },
+    {
+        name: 'Using npx & ORH CLI',
+        installCommand: 'npx @open-react-hub/split-text add @open-react-hub/split-text',
+    },
+    {
+        name: 'Install from GitHub using the ORH Global CLI',
+        description:
+            'By using this command, the SplitText package will be installed directly from GitHub. However, you may need to install the required dependency `@react-spring/web` manually using `npm install` or `yarn add`.',
+        installCommand: 'orh github add ui/split-text',
+    },
+    {
+        name: 'Using Yarn',
+        description:
+            'Install the SplitText package along with its required dependency `@react-spring/web` using Yarn.',
+        installCommand: 'yarn add @open-react-hub/split-text @react-spring/web',
+    },
+]}
+
             usageCode={`import { SplitText } from '@open-react-hub/split-text';
 
 function MyComponent() {
