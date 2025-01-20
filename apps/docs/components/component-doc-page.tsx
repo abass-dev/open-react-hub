@@ -8,6 +8,7 @@ import CodeBlock from '@open-react-hub/code-block'
 
 interface ComponentDocPageProps {
     title: string
+    componentName: string
     description: string
     installCommand: string
     usageCode: string
@@ -37,6 +38,7 @@ export const generateMetadata = ({ metadata }: ComponentDocPageProps): Metadata 
 
 export default function ComponentDocPage({
     title,
+    componentName,
     description,
     installCommand,
     usageCode,
@@ -65,7 +67,7 @@ export default function ComponentDocPage({
                     <Card className="overflow-hidden">
                         <CardHeader>
                             <CardTitle>Live Preview</CardTitle>
-                            <CardDescription>Experiment with the component using the controls below</CardDescription>
+                            <CardDescription>{`Experiment with the ${componentName} component using the controls below`}</CardDescription>
                         </CardHeader>
                         <CardContent>
                             <PreviewComponent />

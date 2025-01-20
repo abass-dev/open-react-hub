@@ -88,6 +88,7 @@ const splitTextProps = [
 export default function SplitTextDocPage() {
     return (
         <ComponentDocPage
+            componentName="Split Text"
             title="Split Text Component"
             description="A customizable React component for splitting and animating text."
             installCommand="npm install @open-react-hub/split-text @react-spring/web"
