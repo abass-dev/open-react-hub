@@ -93,6 +93,7 @@ $ npm start"
 
 export default function CodeBlockPage() {
     return (
+      <div className="container mx-auto py-6 lg:py-10">
         <ComponentDocPage
             title="Code Block Component"
             description="A feature-rich code block component with syntax highlighting, line numbers, copy functionality, and command-line interface support."
@@ -105,5 +106,6 @@ export default function CodeBlockPage() {
                 description: 'Documentation for the CodeBlock component in OpenReactHub'
             }}
         />
+        </div>
     )
 }

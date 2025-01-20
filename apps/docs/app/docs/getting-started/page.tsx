@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function GettingStartedPage() {
   return (
-        <div className="container mx-auto">
+        <div className="container mx-auto py-6 lg:py-10">
         <div className="max-w-[100vw] overflow-hidden flex justify-center flex-col overflow-hidden">
           <div className="flex flex-col px-3 gap-4">
           <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-4">Getting Started with OpenReactHub</h1>
@@ -26,7 +26,7 @@ export default function GettingStartedPage() {
           <TabsTrigger value="manual-setup">Manual Setup</TabsTrigger>
           <TabsTrigger value="next-steps">Next Steps</TabsTrigger>
         </TabsList>
-
+        
         <TabsContent value="quickstart" className="space-y-4 max-w-[100vw] overflow-hidden">
           <h2 className="text-2xl font-bold">Quickstart</h2>
           <p>The fastest way to get started with OpenReactHub is to use our CLI tool. Follow these steps:</p>
@@ -36,15 +36,17 @@ export default function GettingStartedPage() {
               <p>Install the OpenReactHub CLI globally:</p>
               <CodeBlock
                 code="npm install -g @open-react-hub/cli"
-                isCommandLine
-                showLineNumbers={false}
-              />
+                overwriteLanguageLabel="Terminal"
+                language="bash"
+                showLineNumbers={false}/>
             </li>
             <li>
               <p>Create a new project:</p>
               <CodeBlock
                 code="orh create my-openreacthub-app"
+                overwriteLanguageLabel="Terminal"
                 language="bash"
+                showLineNumbers={false}
               />
               <p className="mt-2 text-sm text-muted-foreground">This command will create a new Next.js project with OpenReactHub pre-configured.</p>
             </li>
@@ -52,14 +54,18 @@ export default function GettingStartedPage() {
               <p>Navigate to your project directory:</p>
               <CodeBlock
                 code="cd my-openreacthub-app"
+                overwriteLanguageLabel="Terminal"
                 language="bash"
+                showLineNumbers={false}
               />
             </li>
             <li>
               <p>Start the development server:</p>
               <CodeBlock
                 code="npm run dev"
+                overwriteLanguageLabel="Terminal"
                 language="bash"
+                showLineNumbers={false}
               />
             </li>
           </ol>
@@ -72,8 +78,7 @@ export default function GettingStartedPage() {
             <h3 className="text-xl font-semibold">What's Included</h3>
             <p>The created project comes with an example component that demonstrates how to use OpenReactHub components:</p>
             <CodeBlock
-              code={`
-import { Button } from '@open-react-hub/core';
+              code={`import { Button } from '@open-react-hub/core';
 
 export default function MyComponent() {
   return (
@@ -84,7 +89,6 @@ export default function MyComponent() {
   );
 }
               `}
-              language="jsx"
             />
             <p>This component is already imported and used in your <code className="bg-muted px-1 py-0.5 rounded">src/app/page.tsx</code> file.</p>
           </div>
@@ -99,7 +103,9 @@ export default function MyComponent() {
               <p>Install the core OpenReactHub package:</p>
               <CodeBlock
                 code="npm install @open-react-hub/core"
+                overwriteLanguageLabel="Terminal"
                 language="bash"
+                showLineNumbers={false}
               />
             </li>
             <li>
@@ -107,13 +113,14 @@ export default function MyComponent() {
               <CodeBlock
                 code="npm install react react-dom next"
                 language="bash"
+                overwriteLanguageLabel="Terminal"
+                showLineNumbers={false}
               />
             </li>
             <li>
               <p>Create or update your <code className="bg-muted px-1 py-0.5 rounded">tailwind.config.js</code> file:</p>
               <CodeBlock
-                code={`
-const { openReactHubPreset } = require('@open-react-hub/core/tailwind');
+                code={`const { openReactHubPreset } = require('@open-react-hub/core/tailwind');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -132,8 +139,7 @@ module.exports = {
             <li>
               <p>Import the OpenReactHub styles in your <code className="bg-muted px-1 py-0.5 rounded">globals.css</code> file:</p>
               <CodeBlock
-                code={`
-@import '@open-react-hub/core/styles.css';
+                code={`@import '@open-react-hub/core/styles.css';
 
 @tailwind base;
 @tailwind components;
@@ -164,8 +170,7 @@ module.exports = {
             <h3 className="text-xl font-semibold">Example Usage</h3>
             <p>Here's a quick example of how to use an OpenReactHub component in your project:</p>
             <CodeBlock
-              code={`
-import { Button } from '@open-react-hub/core';
+              code={`import { Button } from '@open-react-hub/core';
 
 export default function MyComponent() {
   return (

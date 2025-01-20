@@ -71,7 +71,13 @@ export default function ComponentDocPage({
                             <CardDescription>Install the component and its dependencies</CardDescription>
                         </CardHeader>
                         <CardContent className="max-w-[100vw] overflow-hidden">
-                            <CodeBlock code={installCommand} isCommandLine />
+                          <CodeBlock
+                            code={installCommand}
+                            isCommandLine={false}
+                            overwriteLanguageLabel="Terminal"
+                            language="bash"
+                            showLineNumbers={false}
+                            />
                         </CardContent>
                     </Card>
                 </TabsContent>

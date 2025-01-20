@@ -1,24 +1,59 @@
-// CodeBlock.tsx
 "use client"
 
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Check, Copy, Terminal, Hash } from 'lucide-react';
-import Prism from 'prismjs';
-import 'prismjs/themes/prism-tomorrow.css';
-import 'prismjs/plugins/command-line/prism-command-line.css';
-import 'prismjs/plugins/command-line/prism-command-line';
-// Language imports
-import 'prismjs/components/prism-typescript';
-import 'prismjs/components/prism-javascript';
-import 'prismjs/components/prism-jsx';
-import 'prismjs/components/prism-tsx';
-import 'prismjs/components/prism-css';
-import 'prismjs/components/prism-python';
-import 'prismjs/components/prism-java';
-import 'prismjs/components/prism-json';
-import 'prismjs/components/prism-bash';
-import 'prismjs/components/prism-markdown';
-import 'prismjs/components/prism-shell-session';
+import dynamic from 'next/dynamic';
+
+// Create a wrapper for Prism initialization
+const initPrism = async () => {
+    const Prism = (await import('prismjs')).default;
+    await Promise.all([
+        import('prismjs/components/prism-typescript'),
+        import('prismjs/components/prism-javascript'),
+        import('prismjs/components/prism-jsx'),
+        import('prismjs/components/prism-tsx'),
+        import('prismjs/components/prism-css'),
+        import('prismjs/components/prism-python'),
+        import('prismjs/components/prism-java'),
+        import('prismjs/components/prism-json'),
+        import('prismjs/components/prism-bash'),
+        import('prismjs/components/prism-markdown'),
+        import('prismjs/components/prism-shell-session'),
+        import('prismjs/plugins/command-line/prism-command-line'),
+    ]);
+
+    // Configure bash language after it's loaded
+    if (Prism.languages.bash) {
+        Prism.languages.bash.command = [
+            {
+                pattern: /\borh\b/,
+                alias: 'orh',
+            },
+            {
+                pattern: /\badd\b/,
+                alias: 'orh-keyword',
+            },
+            {
+                pattern: /\bcreate\b/,
+                alias: 'orh-keyword',
+            },
+        ];
+    }
+
+    return Prism;
+};
+
+// Import styles only on the client side
+const ImportStyles = () => {
+    useEffect(() => {
+        const loadStyles = async () => {
+            await import('prismjs/themes/prism-tomorrow.css');
+            await import('prismjs/plugins/command-line/prism-command-line.css');
+        };
+        loadStyles();
+    }, []);
+    return null;
+};
 
 // Constants
 const COPY_TIMEOUT = 2000;
@@ -55,6 +90,7 @@ export interface CodeBlockProps {
     showLineNumbersToggler?: boolean;
     showCopyButton?: boolean;
     showLanguageLabel?: boolean;
+    overwriteLanguageLabel?: string;
     theme?: 'light' | 'dark';
     className?: string;
     isCommandLine?: boolean;
@@ -84,6 +120,7 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
     showLineNumbersToggler = false,
     showCopyButton = true,
     showLanguageLabel = true,
+    overwriteLanguageLabel = '',
     theme = 'dark',
     className = '',
     isCommandLine = false,
@@ -91,6 +128,22 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
 }) => {
     const [isCopied, setIsCopied] = useState(false);
     const [showLineNumbers, setShowLineNumbers] = useState(initialShowLineNumbers);
+    const [isClient, setIsClient] = useState(false);
+    const [prismInstance, setPrismInstance] = useState<any>(null);
+
+    // Initialize on client side
+    useEffect(() => {
+        setIsClient(true);
+        const loadPrism = async () => {
+            try {
+                const Prism = await initPrism();
+                setPrismInstance(Prism);
+            } catch (error) {
+                console.error('Error loading Prism:', error);
+            }
+        };
+        loadPrism();
+    }, []);
 
     // Process code lines
     const { processedCode, processedLines } = useMemo(() => {
@@ -142,8 +195,13 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
 
     // Syntax highlighting
     useEffect(() => {
-        Prism.highlightAll();
-    }, [processedCode, language, isCommandLine]);
+        if (prismInstance && typeof window !== 'undefined') {
+            // Use setTimeout to ensure the DOM is ready
+            setTimeout(() => {
+                prismInstance.highlightAll();
+            }, 0);
+        }
+    }, [processedCode, language, isCommandLine, prismInstance]);
 
     // Render header buttons
     const renderHeaderButtons = () => (
@@ -203,7 +261,7 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
     const renderCode = () => (
         <div className="flex min-w-0">
             {showLineNumbers && (
-                <div className={`flex-none pt-4 pl-4 ${themeConfig.lineNumber[theme]} opacity-60 text-right min-w-[3rem]`}>
+                <div className={`flex-none pt-6 pl-4 ${themeConfig.lineNumber[theme]} opacity-60 text-right min-w-[3rem]`}>
                     {processedCode.split('\n').map((_, i) => (
                         <div key={i} className="px-2">
                             {i + 1}
@@ -217,8 +275,18 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
         </div>
     );
 
+    // Don't render until client-side and Prism is loaded
+    if (!isClient || !prismInstance) {
+        return (
+            <div className={`rounded-lg ${themeConfig.background[theme]} ${className} w-full min-h-[100px]`}>
+                <div className="animate-pulse" />
+            </div>
+        );
+    }
+
     return (
         <div className="max-w-[100vw] overflow-hidden">
+            <ImportStyles />
             <div className={`rounded-lg ${themeConfig.background[theme]} ${className} w-full`}>
                 {/* Header */}
                 <div className="flex items-center justify-between px-4 py-2 border-b border-gray-700">
@@ -226,7 +294,7 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
                         <Terminal size={16} className={themeConfig.text[theme]} />
                         {showLanguageLabel && (
                             <span className={`text-sm font-medium ${themeConfig.text[theme]}`}>
-                                {isCommandLine ? 'Terminal' : language.charAt(0).toUpperCase() + language.slice(1)}
+                                {overwriteLanguageLabel !== "" ? overwriteLanguageLabel : isCommandLine ? 'Terminal' : language.charAt(0).toUpperCase() + language.slice(1)}
                             </span>
                         )}
                     </div>

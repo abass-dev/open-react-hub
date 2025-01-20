@@ -48,7 +48,7 @@ export function AppSidebar() {
   const toggleMobileSidebar = () => setMobileOpen((prev) => !prev)
 
   return (
-    <Sidebar className="h-full" collapsible='none' side="right">
+    <Sidebar className="h-full" side="right">
       <SidebarHeader className="border-b px-6 py-3 flex justify-between items-center">
         <Link href="/" className="flex items-center gap-2" aria-label="Go to OpenReactHub home">
           <Package className="h-6 w-6 text-primary" />
