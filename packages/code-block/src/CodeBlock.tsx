@@ -127,30 +127,13 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
         loadPrism();
     }, []);
 
-    // Memoize the commandLine object
-    const memoizedCommandLine = useMemo(() => ({
-        user: commandLine.user || DEFAULT_COMMAND_LINE.user,
-        host: commandLine.host || DEFAULT_COMMAND_LINE.host,
-        path: commandLine.path || DEFAULT_COMMAND_LINE.path,
-        basePrompt: commandLine.basePrompt || DEFAULT_COMMAND_LINE.basePrompt,
-        continuationPrompt: commandLine.continuationPrompt || DEFAULT_COMMAND_LINE.continuationPrompt,
-        lines: commandLine.lines || DEFAULT_COMMAND_LINE.lines,
-    }), [
-        commandLine.user,
-        commandLine.host,
-        commandLine.path,
-        commandLine.basePrompt,
-        commandLine.continuationPrompt,
-        commandLine.lines
-    ]);
-
-    // Memoize command line and code processing
+    // Process code lines
     const { processedCode, processedLines } = useMemo(() => {
         if (!isCommandLine) {
             return { processedCode: code, processedLines: [] };
         }
 
-        const lines = memoizedCommandLine.lines || code.trim().split("\n").map((line) => ({
+        const lines = commandLine.lines || code.trim().split("\n").map((line) => ({
             content: line,
             isOutput: !line.startsWith("$") && !line.startsWith(">"),
             isContinuation: line.startsWith(">"),
@@ -160,7 +143,7 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
             processedLines: lines,
             processedCode: lines.map((line) => line.content).join("\n"),
         };
-    }, [code, isCommandLine, memoizedCommandLine]);
+    }, [code, isCommandLine, commandLine]);
 
     // Handle copy functionality
     const handleCopy = useCallback(async () => {
@@ -181,16 +164,19 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
         setShowLineNumbers((prev) => !prev);
     }, []);
 
-    // Get command line prompt with memoized commandLine
-    const getPrompt = useCallback((line: LineConfig): string => {
-        if (line.customPrompt) return line.customPrompt;
-        if (line.isOutput) return "";
-        if (line.isContinuation) return memoizedCommandLine.continuationPrompt;
+    // Get command line prompt
+    const getPrompt = useCallback(
+        (line: LineConfig): string => {
+            if (line.customPrompt) return line.customPrompt;
+            if (line.isOutput) return "";
+            if (line.isContinuation) return commandLine.continuationPrompt || "→ ";
 
-        const { user, host, path, basePrompt } = memoizedCommandLine;
-        if (basePrompt) return basePrompt;
-        return `[${user}@${host} ${path}]$`;
-    }, [memoizedCommandLine]);
+            const { user, host, path, basePrompt } = commandLine;
+            if (basePrompt) return basePrompt;
+            return `[${user}@${host} ${path}]$`;
+        },
+        [commandLine]
+    );
 
     // Syntax highlighting
     useEffect(() => {
@@ -209,8 +195,8 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
                 <button
                     onClick={toggleLineNumbers}
                     className={`p-1.5 rounded-md transition-colors
-                    ${theme === "light" ? "hover:bg-gray-200" : "hover:bg-gray-700"}
-                    ${showLineNumbers ? "text-blue-500" : themeConfig.text[theme]}`}
+              ${theme === "light" ? "hover:bg-gray-200" : "hover:bg-gray-700"}
+              ${showLineNumbers ? "text-blue-500" : themeConfig.text[theme]}`}
                     title="Toggle line numbers"
                 >
                     <Hash size={16} />
@@ -220,7 +206,7 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
                 <button
                     onClick={handleCopy}
                     className={`p-1.5 rounded-md transition-colors
-                    ${theme === "light" ? "hover:bg-gray-200" : "hover:bg-gray-700"}`}
+              ${theme === "light" ? "hover:bg-gray-200" : "hover:bg-gray-700"}`}
                 >
                     {isCopied ? (
                         <Check size={16} className="text-green-500" />
