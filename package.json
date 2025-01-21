@@ -18,5 +18,8 @@
     "tsup": "^8.0.0",
     "@changesets/cli": "^2.27.1"
   },
-  "packageManager": "pnpm@8.9.0"
+  "engines": {
+    "node": ">=14.0.0",
+    "pnmp": ">=7.5.0"
+  }
 }
