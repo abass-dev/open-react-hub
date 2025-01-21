@@ -18,10 +18,5 @@
     "tsup": "^8.0.0",
     "@changesets/cli": "^2.27.1",
     "turbo": "latest"
-  },
-  "engines": {
-    "node": ">=20",
-    "pnpm": "8.15.8"
-  },
-  "packageManager": "pnpm@8.15.8"
+  }
 }
