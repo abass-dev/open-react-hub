@@ -21,9 +21,6 @@
   ],
   "author": "Aabass Dev abassthedev@gmail.com",
   "license": "MIT",
-  "engines": {
-    "node": ">=18.18.0"
-  },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0",
     "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0",
@@ -53,4 +50,3 @@
     "directory": "packages/core"
   }
 }
-

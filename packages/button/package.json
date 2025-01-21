@@ -42,8 +42,5 @@
   "bugs": {
     "url": "https://github.com/abass-dev/open-react-hub/issues"
   },
-  "homepage": "https://github.com/abass-dev/open-react-hub#readme",
-  "engines": {
-    "node": ">=14.0.0"
-  }
+  "homepage": "https://github.com/abass-dev/open-react-hub#readme"
 }
