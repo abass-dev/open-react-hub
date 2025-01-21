@@ -7,19 +7,21 @@
   ],
   "scripts": {
     "dev": "pnpm --filter docs dev",
-    "build": "pnpm -r build",
-    "test": "pnpm -r test",
-    "lint": "pnpm -r lint"
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "lint": "turbo run lint"
   },
   "devDependencies": {
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "typescript": "^5.0.0",
     "tsup": "^8.0.0",
-    "@changesets/cli": "^2.27.1"
+    "@changesets/cli": "^2.27.1",
+    "turbo": "latest"
   },
+  "packageManager": "pnpm@8.9.0",
   "engines": {
     "node": ">=14.0.0",
-    "pnmp": ">=7.5.0"
+    "pnpm": ">=8.9.0"
   }
 }
