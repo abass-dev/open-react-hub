@@ -21,24 +21,6 @@ const initPrism = async (): Promise<any> => {
         import("prismjs/plugins/command-line/prism-command-line"),
     ]);
 
-    // Configure bash language after it's loaded
-    if (Prism.languages.bash) {
-        Prism.languages.bash.command = [
-            {
-                pattern: /\borh\b/,
-                alias: "orh",
-            },
-            {
-                pattern: /\badd\b/,
-                alias: "orh-keyword",
-            },
-            {
-                pattern: /\bcreate\b/,
-                alias: "orh-keyword",
-            },
-        ];
-    }
-
     return Prism;
 };
 

@@ -1,6 +1,6 @@
 {
     "name": "@open-react-hub/code-block",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "A feature-rich, customizable code block component for React applications with syntax highlighting, line numbers, and themes",
     "author": "Abass Dev",
     "license": "MIT",
