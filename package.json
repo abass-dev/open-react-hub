@@ -18,5 +18,6 @@
     "tsup": "^8.0.0",
     "@changesets/cli": "^2.27.1",
     "turbo": "latest"
-  }
+  },
+  "packageManager": "pnpm@8.9.0"
 }
