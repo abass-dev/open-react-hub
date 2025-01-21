@@ -220,4 +220,4 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 
 ## License
 
-MIT © [OpenReactHub](https://github.com/open-react-hub)
+MIT © [OpenReactHub](https://github.com/abass-dev/open-react-hub)

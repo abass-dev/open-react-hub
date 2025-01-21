@@ -77,7 +77,7 @@ export function Header() {
               </div>
             </div>
             <nav className="flex items-center gap-2">
-              <Link href="https://github.com/openreacthub" target="_blank" rel="noreferrer">
+              <Link href="https://github.com/abass-dev/open-react-hub" target="_blank" rel="noreferrer">
                 <Button variant="ghost" size="icon" className="h-9 w-9">
                   <GithubIcon className="h-4 w-4" />
                   <span className="sr-only">GitHub</span>

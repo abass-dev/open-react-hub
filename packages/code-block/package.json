@@ -1,16 +1,16 @@
 {
     "name": "@open-react-hub/code-block",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "A feature-rich, customizable code block component for React applications with syntax highlighting, line numbers, and themes",
     "author": "Abass Dev",
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "https://github.com/open-react-hub/code-block"
+        "url": "https://github.com/abass-dev/open-react-hub"
     },
-    "homepage": "https://github.com/open-react-hub/code-block#readme",
+    "homepage": "https://github.com/abass-dev/open-react-hub#readme",
     "bugs": {
-        "url": "https://github.com/open-react-hub/code-block/issues"
+        "url": "https://github.com/abass-dev/open-react-hub/issues"
     },
     "keywords": [
         "react",
@@ -30,33 +30,29 @@
         "LICENSE"
     ],
     "scripts": {
-        "build": "tsup src/index.tsx --format cjs,esm --dts --minify",
-        "dev": "tsup src/index.tsx --format cjs,esm --dts --watch",
-        "lint": "eslint src/**/*.{ts,tsx}",
-        "clean": "rm -rf dist",
-        "test": "jest",
+        "build": "rollup -c",
         "prepublishOnly": "npm run build"
     },
     "peerDependencies": {
-        "react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0",
-        "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0",
+        "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
+        "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0",
         "lucide-react": "^0.263.1",
         "prismjs": "^1.29.0"
     },
     "devDependencies": {
+        "@rollup/plugin-commonjs": "^22.0.0",
+        "@rollup/plugin-node-resolve": "^13.3.0",
+        "@types/prismjs": "^1.26.3",
         "@types/react": "^18.2.0",
         "@types/react-dom": "^18.2.0",
-        "@types/prismjs": "^1.26.3",
         "@typescript-eslint/eslint-plugin": "^6.0.0",
         "@typescript-eslint/parser": "^6.0.0",
         "eslint": "^8.0.0",
         "eslint-plugin-react": "^7.33.2",
         "eslint-plugin-react-hooks": "^4.6.0",
-        "typescript": "^5.0.0",
-        "tsup": "^8.0.0",
-        "jest": "^29.0.0",
-        "@testing-library/react": "^14.0.0",
-        "@testing-library/jest-dom": "^6.0.0"
+        "rollup": "^2.68.0",
+        "rollup-plugin-typescript2": "^0.31.2",
+        "typescript": "^4.9.5"
     },
     "publishConfig": {
         "access": "public"

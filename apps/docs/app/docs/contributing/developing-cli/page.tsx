@@ -172,7 +172,7 @@ export class LazyCommandLoader {
           <h3 className="text-xl font-semibold mb-2">GitHub Repository</h3>
           <p className="text-muted-foreground mb-4">Contribute directly on our GitHub repository.</p>
           <Button asChild variant="outline">
-            <Link href="https://github.com/openreacthub/cli" className="flex items-center">
+            <Link href="https://github.com/abass-dev/open-react-hub" className="flex items-center">
               View on GitHub
               <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
