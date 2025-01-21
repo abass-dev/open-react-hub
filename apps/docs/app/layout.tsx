@@ -12,13 +12,6 @@ export const metadata = {
 }
 
 
-const roboto = Roboto({
-  weight: ['400', '700'],
-  style: ['normal', 'italic'],
-  subsets: ['latin'],
-  display: 'swap',
-})
-
 const fraunChauPhilomeneOneces = Chau_Philomene_One({
   subsets: ['latin'],
   weight: "400",

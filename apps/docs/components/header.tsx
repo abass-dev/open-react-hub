@@ -11,6 +11,7 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet"
+import { ThemeAwareLogo } from './ThemeAwareLogo'
 
 export function Header() {
   const pathname = usePathname()
@@ -19,8 +20,8 @@ export function Header() {
     <header className="sticky top-0 z-40 w-full container mx-auto px-3 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 items-center">
         <div className="flex items-center gap-2 lg:gap-4">
-          <Link href="/" className="flex items-center space-x-2">
-            <span className="font-bold inline-block">OpenReactHub</span>
+          <Link href="/" className="block lg:hidden space-x-2">
+            <ThemeAwareLogo />
           </Link>
           <nav className="hidden md:flex items-center gap-6 text-sm">
             <Link
@@ -43,7 +44,7 @@ export function Header() {
             </Link>
           </nav>
         </div>
-        <div className="flex flex-1 items-center justify-between space-x-2div">
+        <div className="flex flex-1 items-center justify-between space-x-2">
           <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
             <div className="w-full flex-1 md:w-auto md:flex-none">
               <Sheet>
@@ -64,7 +65,7 @@ export function Header() {
                   </div>
                 </SheetContent>
               </Sheet>
-              <div className="hidden md:block">
+              <div className="hidden lg:block">
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                   <input
@@ -91,4 +92,3 @@ export function Header() {
     </header>
   )
 }
-
