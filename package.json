@@ -19,9 +19,5 @@
     "@changesets/cli": "^2.27.1",
     "turbo": "latest"
   },
-  "engines": {
-    "node": ">=16",
-    "pnpm": ">=8"
-  },
   "packageManager": "pnpm@9.0.4"
 }
