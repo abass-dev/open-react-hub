@@ -48,9 +48,7 @@ export const metadata = {
         type: 'image/png',
       },
     ],
-  },
-  // Optional: Add theme color to match manifest
-  themeColor: '#ffffff',
+  }
 }
 
 const fraunChauPhilomeneOneces = Chau_Philomene_One({
@@ -70,13 +68,13 @@ export default function RootLayout({
       <body className={`${fraunChauPhilomeneOneces.variable} ${GeistSans.className}`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <SidebarProvider>
-            <div className="flex w-full min-h-screen bg-background">
+            <div className="flex w-full max-w-screen-2xl mx-auto min-h-screen bg-background">
               <div className="hidden h-screen border-r bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 lg:block">
                 <AppSidebar />
               </div>
-              <div className="flex-1 flex flex-col">
+              <div className="flex-1 flex flex-col min-h-screen w-full">
                 <Header />
-                <main className="flex-1">
+                <main className="flex-1 w-full max-w-6xl mx-auto px-4 py-8">
                   {children}
                 </main>
               </div>

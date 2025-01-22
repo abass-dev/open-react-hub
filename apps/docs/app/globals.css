@@ -150,12 +150,11 @@
 
 /* Customize Syntax Highlighting for orh (@open-react-hub/cli) */
 .token.orh {
-  color: #ff8800; /* Orange for 'orh' */
+  color: #ff8800;
+  /* Orange for 'orh' */
 }
 
 .token.orh-keyword {
-  color: #00ff00; /* Green for 'add' and 'create' */
+  color: #00ff00;
+  /* Green for 'add' and 'create' */
 }
-
-
-

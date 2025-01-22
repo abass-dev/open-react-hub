@@ -6,8 +6,8 @@ import { Switch } from '@/components/ui/switch'
 import { Label } from '@/components/ui/label'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Card, CardContent } from '@/components/ui/card'
-import { SupportedLanguage } from '@/types/code-block'
-import CodeBlock from './code-block'
+import { SupportedLanguage } from 'types/code-block'
+import CodeBlock from '@open-react-hub/code-block'
 
 // Sample code snippets organized by category
 const sampleCode = {
@@ -199,12 +199,21 @@ export function CodeBlockPreview() {
     }
 
     return (
-        <div className="space-y-8">
+        <div className="space-y-6">
             <Tabs defaultValue="algorithms" value={category} onValueChange={value => handleCategoryChange(value as CodeCategory)}>
                 <TabsList className="grid w-full grid-cols-3">
-                    <TabsTrigger value="algorithms">Algorithms</TabsTrigger>
-                    <TabsTrigger value="dataStructures">Data Structures</TabsTrigger>
-                    <TabsTrigger value="terminal">Terminal Commands</TabsTrigger>
+                    <TabsTrigger value="algorithms" className="max-w-full">
+                        <span className="hidden sm:block">Algorithms</span>
+                        <span className="sm:hidden">Alg...</span>
+                    </TabsTrigger>
+                    <TabsTrigger value="dataStructures" className="max-w-full">
+                        <span className="hidden sm:block">Data Structures</span>
+                        <span className="sm:hidden">Data...</span>
+                    </TabsTrigger>
+                    <TabsTrigger value="terminal" className="max-w-full">
+                        <span className="hidden sm:block">Terminal Commands</span>
+                        <span className="sm:hidden">Term...</span>
+                    </TabsTrigger>
                 </TabsList>
             </Tabs>
 
@@ -241,10 +250,9 @@ export function CodeBlockPreview() {
                                 </Select>
                             </div>
                         </div>
-
-                        <div className="space-y-4">
+                        <div className="space-y-6">
                             <div className="flex items-center justify-between">
-                                <Label>Show Line Numbers</Label>
+                                <Label>Show Line Numbers Toggler</Label>
                                 <Switch
                                     checked={showLineNumbers}
                                     onCheckedChange={setShowLineNumbers}
@@ -273,6 +281,7 @@ export function CodeBlockPreview() {
 
             <CodeBlock
                 code={currentCode}
+                showLineNumbersToggler={showLineNumbers}
                 language={isTerminal ? undefined : (language as SupportedLanguage)}
                 theme={theme}
                 showLineNumbers={showLineNumbers}

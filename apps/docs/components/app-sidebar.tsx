@@ -3,7 +3,7 @@
 import * as React from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Package, FileText, Cpu, Lightbulb, Terminal, Code, Search, TextIcon, CodeSquareIcon } from 'lucide-react'
+import { Package, FileText, Cpu, Lightbulb, Terminal, Code, Search, TextIcon, CodeSquareIcon, MessageCircle } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import {
@@ -17,7 +17,6 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
 } from '@/components/ui/sidebar'
-import Image from 'next/image'
 import { LucideIcon } from 'lucide-react'
 import { ThemeAwareLogo } from './ThemeAwareLogo'
 
@@ -42,6 +41,7 @@ const docsNavItems: NavItem[] = [
   { title: 'Theming', url: '/docs/theming', icon: Package },
   { title: 'CLI', url: '/docs/cli', icon: Terminal },
   { title: 'Developing CLI', url: '/docs/contributing/developing-cli', icon: Code },
+  { title: 'Discussions', url: '/discussions', icon: MessageCircle },
 ]
 
 const componentsNavItems: ComponentGroup[] = [

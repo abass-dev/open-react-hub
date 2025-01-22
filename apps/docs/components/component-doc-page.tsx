@@ -2,9 +2,12 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import CodeBlock from '@open-react-hub/code-block'
+import { ScrollArea } from './ui/scroll-area'
+import { Badge } from './ui/badge'
 
 interface ComponentDocPageProps {
     title: string
@@ -55,22 +58,68 @@ export default function ComponentDocPage({
             </div>
 
             {/* Tabs */}
-            <Tabs defaultValue="preview" className="mt-8 max-w-[100vw] px-3 overflow-hidden">
+            <Tabs defaultValue="preview" className="mt-8 w-full">
                 <TabsList className="grid w-full grid-cols-3">
                     <TabsTrigger value="preview">Preview</TabsTrigger>
                     <TabsTrigger value="installation">Installation</TabsTrigger>
                     <TabsTrigger value="usage">Usage</TabsTrigger>
                 </TabsList>
 
-                {/* Preview Tab */}
+                {/* Preview Tab */};
                 <TabsContent value="preview" className="mt-6 max-w-[100vw] overflow-hidden">
-                    <Card className="overflow-hidden">
+                    <Card>
                         <CardHeader>
-                            <CardTitle>Live Preview</CardTitle>
+                            <CardTitle className="font-chau-philomene-one text-3xl lg:text-4xl">Live Preview</CardTitle>
                             <CardDescription>{`Experiment with the ${componentName} component using the controls below`}</CardDescription>
                         </CardHeader>
                         <CardContent>
                             <PreviewComponent />
+
+                            {/* Props Table */}
+                            {props.length > 0 && (
+                                <Card className="mt-6">
+                                    <CardHeader>
+                                        <CardTitle className="text-xl font-semibold">Props</CardTitle>
+                                        <CardDescription>Detailed information about the component's props</CardDescription>
+                                    </CardHeader>
+                                    <CardContent>
+                                        <ScrollArea className="h-[400px]">
+                                            <Table>
+                                                <TableHeader>
+                                                    <TableRow>
+                                                        <TableHead className="w-[150px]">Prop</TableHead>
+                                                        <TableHead className="w-[150px]">Type</TableHead>
+                                                        <TableHead className="w-[100px]">Required</TableHead>
+                                                        <TableHead className="w-[150px]">Default</TableHead>
+                                                        <TableHead>Description</TableHead>
+                                                    </TableRow>
+                                                </TableHeader>
+                                                <TableBody>
+                                                    {props.map((prop) => (
+                                                        <TableRow key={prop.name}>
+                                                            <TableCell className="font-medium">{prop.name}</TableCell>
+                                                            <TableCell>
+                                                                <code className="px-1 py-0.5 rounded bg-muted">{prop.type}</code>
+                                                            </TableCell>
+                                                            <TableCell>
+                                                                <Badge variant={prop.required ? "default" : "secondary"}>{prop.required ? "Yes" : "No"}</Badge>
+                                                            </TableCell>
+                                                            <TableCell>
+                                                                {prop.defaultValue ? (
+                                                                    <code className="px-1 py-0.5 rounded bg-muted">{prop.defaultValue}</code>
+                                                                ) : (
+                                                                    "-"
+                                                                )}
+                                                            </TableCell>
+                                                            <TableCell>{prop.description}</TableCell>
+                                                        </TableRow>
+                                                    ))}
+                                                </TableBody>
+                                            </Table>
+                                        </ScrollArea>
+                                    </CardContent>
+                                </Card>
+                            )}
                         </CardContent>
                     </Card>
                 </TabsContent>
@@ -78,9 +127,12 @@ export default function ComponentDocPage({
                 {/* Installation Tab */}
                 <TabsContent value="installation" className="mt-6 max-w-[100vw] overflow-hidden">
                     <Card className="overflow-hidden">
+                        {/* Basic Installation */}
+                        <CardHeader>
+                            <CardTitle className='font-chau-philomene-one lg:text-4xl text-3xl'>Installation</CardTitle>
+                            <CardDescription>{`Here's how you can install the ${componentName} component in your project:`}</CardDescription>
+                        </CardHeader>
                         <CardContent className="max-w-[100vw] pt-2 overflow-hidden">
-                            {/* Basic Installation */}
-                            <h3 className="text-lg font-semibold">Basic Installation</h3>
                             <CodeBlock
                                 code={installCommand}
                                 isCommandLine={false}
@@ -117,51 +169,11 @@ export default function ComponentDocPage({
                 <TabsContent value="usage" className="mt-6 max-w-[100vw] overflow-hidden">
                     <Card className="overflow-hidden">
                         <CardHeader>
-                            <CardTitle>Usage</CardTitle>
-                            <CardDescription>Learn how to use the component in your project</CardDescription>
+                            <CardTitle className='font-chau-philomene-one lg:text-4xl text-3xl'>Usage</CardTitle>
+                            <CardDescription>{`Here's a basic example of how to use the ${componentName} component in your project:`}</CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-4 overflow-hidden">
-                            <p className="text-sm text-muted-foreground">
-                                Here's a basic example of how to use the component:
-                            </p>
                             <CodeBlock code={usageCode} language="jsx" />
-
-                            {/* Props Table */}
-                            {props.length > 0 && (
-                                <>
-                                    <h3 className="text-lg font-semibold mt-6">Props</h3>
-                                    <div className="overflow-x-auto">
-                                        <table className="table-auto w-full text-left text-sm">
-                                            <thead>
-                                                <tr className="border-b">
-                                                    <th className="py-2">Prop</th>
-                                                    <th className="py-2">Type</th>
-                                                    <th className="py-2">Required</th>
-                                                    <th className="py-2">Default</th>
-                                                    <th className="py-2">Description</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {props.map((prop) => (
-                                                    <tr key={prop.name} className="border-b">
-                                                        <td className="py-2 text-primary font-medium">{prop.name}</td>
-                                                        <td className="py-2">{prop.type}</td>
-                                                        <td className="py-2">{prop.required ? 'Yes' : 'No'}</td>
-                                                        <td className="py-2">
-                                                            {prop.defaultValue ? (
-                                                                <code className="text-muted-foreground">{prop.defaultValue}</code>
-                                                            ) : (
-                                                                '-'
-                                                            )}
-                                                        </td>
-                                                        <td className="py-2">{prop.description}</td>
-                                                    </tr>
-                                                ))}
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </>
-                            )}
                         </CardContent>
                     </Card>
                 </TabsContent>
@@ -198,6 +210,6 @@ export default function ComponentDocPage({
                     </CardContent>
                 </Card>
             </div>
-        </div>
+        </div >
     )
 }

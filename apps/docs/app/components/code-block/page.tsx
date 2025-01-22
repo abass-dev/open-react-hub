@@ -1,5 +1,6 @@
 import { CodeBlockPreview } from '@/components/code-block-preview'
 import ComponentDocPage from '@/components/component-doc-page'
+import CodeBlock from '@open-react-hub/code-block'
 
 const codeBlockProps = [
   {
@@ -21,6 +22,12 @@ const codeBlockProps = [
     defaultValue: 'true'
   },
   {
+    name: 'showLineNumbersToggler',
+    type: 'boolean',
+    description: 'Whether to show line numbers Toggler in the code block header.',
+    defaultValue: 'false'
+  },
+  {
     name: 'showCopyButton',
     type: 'boolean',
     description: 'Whether to show the copy button.',
@@ -31,6 +38,12 @@ const codeBlockProps = [
     type: 'boolean',
     description: 'Whether to show the language label in the header.',
     defaultValue: 'true'
+  },
+  {
+    name: 'overwriteLanguageLabel',
+    type: 'string',
+    description: 'To overwrite the language label in the header.',
+    defaultValue: '""'
   },
   {
     name: 'theme',
@@ -93,20 +106,18 @@ $ npm start"
 
 export default function CodeBlockPage() {
   return (
-    <div className="container mx-auto py-6 lg:py-10">
-      <ComponentDocPage
-        componentName="CodeBlock"
-        title="Code Block Component"
-        description="A feature-rich code block component with syntax highlighting, line numbers, copy functionality, and command-line interface support."
-        installCommand={`orh add ui/code-block\n// OR \nnpx @open-react-hub/cli add @open-react-hub/code-block\n// OR \nyarn add @open-react-hub/code-block\n// OR\nnpm install @open-react-hub/code-block`}
-        usageCode={`${usageExample}\n\n// Command-line interface example:\n${commandLineExample}`}
-        PreviewComponent={CodeBlockPreview}
-        props={codeBlockProps}
-        metadata={{
-          title: 'Code Block Component',
-          description: 'Documentation for the CodeBlock component in OpenReactHub'
-        }}
-      />
-    </div>
+    <ComponentDocPage
+      componentName="CodeBlock"
+      title="Code Block Component"
+      description="A feature-rich code block component with syntax highlighting, line numbers, copy functionality, and command-line interface support."
+      installCommand={`orh add ui/code-block\n// OR \nnpx @open-react-hub/cli add @open-react-hub/code-block\n// OR \nyarn add @open-react-hub/code-block\n// OR\nnpm install @open-react-hub/code-block`}
+      usageCode={`${usageExample}\n\n// Command-line interface example:\n${commandLineExample}`}
+      PreviewComponent={CodeBlockPreview}
+      props={codeBlockProps}
+      metadata={{
+        title: 'Code Block Component',
+        description: 'Documentation for the CodeBlock component in OpenReactHub'
+      }}
+    />
   )
 }

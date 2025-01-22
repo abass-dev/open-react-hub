@@ -10,20 +10,22 @@ FROM base AS deps
 WORKDIR /app
 
 # Copy package.json files from apps and packages directories
-COPY apps/*/package.json ./apps/
+COPY package.json ./
+COPY apps/docs/package.json ./apps/docs/
 COPY packages/*/package.json ./packages/
 
+
 # Install dependencies
-RUN pnpm install
+RUN pnpm install --frozen-lockfile
 
 # Development image
 FROM base AS development
 WORKDIR /app
 
-# Copy deps
+# Copy dependencies and source files
 COPY --from=deps /app/node_modules ./node_modules
-COPY --from=deps /app/packages/*/node_modules ./packages/
-COPY --from=deps /app/apps/*/node_modules ./apps/
+COPY --from=deps /app/packages ./packages
+COPY --from=deps /app/apps/docs/node_modules ./apps/docs/node_modules
 
 # Copy source code
 COPY . .
