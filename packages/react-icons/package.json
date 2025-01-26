@@ -1,6 +1,6 @@
 {
     "name": "@open-react-hub/react-icons",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "description": "Lightweight, customizable React icon library",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -38,6 +38,7 @@
         "@types/react": "^18.2.0",
         "@types/react-dom": "^18.2.0",
         "@types/prismjs": "^1.26.3",
+        "mixpanel-browser": "^2.59.0",
         "@typescript-eslint/eslint-plugin": "^6.0.0",
         "@typescript-eslint/parser": "^6.0.0",
         "eslint": "^8.0.0",
