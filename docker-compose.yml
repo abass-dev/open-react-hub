@@ -1,15 +1,14 @@
 version: '3.8'
+
 services:
   docs-dev:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - "3000:3000" # Map container port 3000 to host
     volumes:
-      - .:/app
-      - /app/node_modules
-      - /app/packages/*/node_modules
-      - /app/apps/*/node_modules
+      - .:/app # Mount the entire project
+      - /app/node_modules # Exclude node_modules from host
     environment:
-      - NODE_ENV=development
+      NODE_ENV: development

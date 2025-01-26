@@ -1,0 +1,16 @@
+node_modules/
+dist/
+coverage/
+.DS_Store
+.DS_Store?
+*.log
+.env
+*.tgz
+.vscode/
+.idea/
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+.pnpm-store

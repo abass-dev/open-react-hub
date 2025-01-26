@@ -9,11 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@open-react-hub/button": "*",
-    "@open-react-hub/cli": "*",
-    "@open-react-hub/split-text": "*",
-    "@open-react-hub/code-block": "*",
-    "@open-react-hub/core": "*",
+    "@open-react-hub/button": "workspace:*",
+    "@open-react-hub/cli": "workspace:*",
+    "@open-react-hub/split-text": "workspace:*",
+    "@open-react-hub/code-block": "workspace:*",
+    "@open-react-hub/core": "workspace:*",
+    "@open-react-hub/react-icons": "workspace:*",
     "@radix-ui/react-collapsible": "^1.1.2",
     "@radix-ui/react-slider": "^1.2.2",
     "@radix-ui/react-dialog": "^1.1.4",

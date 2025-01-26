@@ -19,6 +19,7 @@ import {
 } from '@/components/ui/sidebar'
 import { LucideIcon } from 'lucide-react'
 import { ThemeAwareLogo } from './ThemeAwareLogo'
+import { WebUtilityXIcon } from '@open-react-hub/react-icons'
 
 interface NavItem {
   title: string
@@ -32,6 +33,15 @@ interface ComponentGroup {
     title: string
     url: string
     icon: LucideIcon
+  }[]
+}
+
+interface OutOfTheBoxGroup {
+  title: string
+  items: {
+    title: string
+    url: string
+    icon: any
   }[]
 }
 
@@ -57,6 +67,16 @@ const componentsNavItems: ComponentGroup[] = [
       { title: 'Code Block', url: '/components/code-block', icon: CodeSquareIcon },
     ]
   },
+]
+
+
+const OutOfTheBoxNavItems: OutOfTheBoxGroup[] = [
+  {
+    title: 'Web Tools',
+    items: [
+      { title: 'WebUtilityX', url: 'https://apps.abassdev.com', icon: WebUtilityXIcon },
+    ]
+  }
 ]
 
 export function AppSidebar() {
@@ -111,6 +131,37 @@ export function AppSidebar() {
             <SidebarGroupContent>
               <SidebarMenu>
                 {componentsNavItems.map((group) => (
+                  <SidebarMenuItem key={group.title}>
+                    <React.Fragment>
+                      <SidebarGroupLabel className="text-sm font-medium px-2 py-1">{group.title}</SidebarGroupLabel>
+                      <SidebarMenu>
+                        {group.items.map((item) => (
+                          <SidebarMenuItem key={item.url}>
+                            <SidebarMenuButton
+                              asChild
+                              isActive={pathname === item.url}
+                              className={`flex w-full items-center gap-2 rounded-lg px-4 py-2 ${pathname === item.url ? 'bg-accent text-primary' : 'hover:bg-accent'
+                                }`}
+                            >
+                              <Link href={item.url} aria-current={pathname === item.url ? 'page' : undefined}>
+                                {item.icon && <item.icon className="h-4 w-4" aria-hidden="true" />}
+                                <span>{item.title}</span>
+                              </Link>
+                            </SidebarMenuButton>
+                          </SidebarMenuItem>
+                        ))}
+                      </SidebarMenu>
+                    </React.Fragment>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+          <SidebarGroup>
+            <SidebarGroupLabel className="text-base font-semibold px-2 mt-6">Out of the Box</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {OutOfTheBoxNavItems.map((group) => (
                   <SidebarMenuItem key={group.title}>
                     <React.Fragment>
                       <SidebarGroupLabel className="text-sm font-medium px-2 py-1">{group.title}</SidebarGroupLabel>

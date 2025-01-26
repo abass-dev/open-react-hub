@@ -6,7 +6,8 @@ const nextConfig: NextConfig = {
     '@open-react-hub/cli',
     '@open-react-hub/split-text',
     '@open-react-hub/code-block',
-    '@open-react-hub/core'
+    '@open-react-hub/core',
+    '@open-react-hub/react-icons'
   ],
   typescript: {
     // Ignore TypeScript errors during build

@@ -9,11 +9,8 @@ RUN corepack enable && corepack prepare pnpm@8.9.0 --activate
 FROM base AS deps
 WORKDIR /app
 
-# Copy package.json files from apps and packages directories
-COPY package.json ./
-COPY apps/docs/package.json ./apps/docs/
-COPY packages/*/package.json ./packages/
-
+# Copy configuration files
+COPY package.json pnpm-workspace.yaml ./
 
 # Install dependencies
 RUN pnpm install
@@ -22,16 +19,11 @@ RUN pnpm install
 FROM base AS development
 WORKDIR /app
 
-# Copy dependencies and source files
-COPY --from=deps /app/node_modules ./node_modules
-COPY --from=deps /app/packages ./packages
-COPY --from=deps /app/apps/docs/node_modules ./apps/docs/node_modules
-
 # Copy source code
 COPY . .
 
 # Expose port 3000 for Next.js
-EXPOSE 3000
+ENV PORT 3000
 
 # Start development server
-CMD ["pnpm", "dev"]
+CMD ["pnpm", "dev", "--host", "0.0.0.0"]
