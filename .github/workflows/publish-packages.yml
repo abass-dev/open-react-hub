@@ -47,19 +47,19 @@ jobs:
         if: steps.check_version.outputs.version_changed == 'true'
         run: |
           cd packages/${{ matrix.package }}
-          npm install
+          pnpm install
 
       - name: Build package 
         if: steps.check_version.outputs.version_changed == 'true'
         run: |
           cd packages/${{ matrix.package }}
-          npm build
+          pnpm build
             
       - name: Publish package
         if: steps.check_version.outputs.version_changed == 'true'
         run: |
           cd packages/${{ matrix.package }}
-          npm publish --access public --no-git-checks
+          pnpm publish --access public --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
