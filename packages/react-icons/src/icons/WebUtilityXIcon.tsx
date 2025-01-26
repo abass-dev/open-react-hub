@@ -1,8 +1,22 @@
 import React, { useState } from 'react';
 import { OpenReactHubIconsProps } from '../types';
-import { iconTracker } from '../tracker';
 
-const WebUtilityX: React.FC<OpenReactHubIconsProps> = ({ size = 24, className, ...props }) => {
+/**
+ * React functional component representing the WebUtilityX icon.
+ * 
+ * This component renders an SVG icon with a customizable size and className.
+ * It includes a hover effect that changes the icon's color.
+ * 
+ * Props:
+ * - size: number (default: 24) - Specifies the width and height of the icon.
+ * - className: string - Additional class names to style the icon.
+ * - ...props: any - Other props passed to the SVG element.
+ * 
+ * The icon features a gradient background, a gear-like shape with a glow filter,
+ * and the text "WebUtilityX" at the bottom.
+ */
+
+export const WebUtilityXIcon: React.FC<OpenReactHubIconsProps> = ({ size = 24, className, ...props }) => {
     const [isHovered, setIsHovered] = useState(false);
 
     const handleMouseEnter = () => {
@@ -71,6 +85,4 @@ const WebUtilityX: React.FC<OpenReactHubIconsProps> = ({ size = 24, className, .
         </svg>
     );
 };
-
-export const WebUtilityXIcon = iconTracker.createTrackedIcon(WebUtilityX, 'WebUtilityXIcon');
 

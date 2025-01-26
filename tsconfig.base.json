@@ -17,5 +17,8 @@
         "isolatedModules": true,
         "jsx": "react-jsx",
         "incremental": true
-    }
+    },
+    "exclude": [
+        "node_modules"
+    ]
 }

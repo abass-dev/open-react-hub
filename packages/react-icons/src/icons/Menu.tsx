@@ -1,8 +1,20 @@
 import React from 'react';
 import { OpenReactHubIconsProps } from '../types';
-import { iconTracker } from '../tracker';
 
-const Menu: React.FC<OpenReactHubIconsProps> = ({
+/**
+ * A horizontal menu icon.
+ *
+ * @example
+ * import { MenuIcon } from '@open-react-hub/react-icons';
+ *
+ * <MenuIcon />
+ *
+ * @param {Object} props
+ * @prop {number} [size=24] - The size of the icon.
+ * @prop {string} [color='currentColor'] - The color of the icon.
+ * @prop {number} [strokeWidth=2] - The stroke width of the icon.
+ */
+export const MenuIcon: React.FC<OpenReactHubIconsProps> = ({
     size = 24,
     color = 'currentColor',
     strokeWidth = 2,
@@ -26,4 +38,3 @@ const Menu: React.FC<OpenReactHubIconsProps> = ({
     </svg>
 );
 
-export const MenuIcon = iconTracker.createTrackedIcon(Menu, 'MenuIcon');

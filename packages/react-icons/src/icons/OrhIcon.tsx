@@ -1,8 +1,20 @@
 import React, { useState } from 'react';
 import { OpenReactHubIconsProps } from '../types';
-import { iconTracker } from '../tracker';
 
-const Orh: React.FC<OpenReactHubIconsProps> = ({ size = 24, className, ...props }) => {
+/**
+ * The ORH icon component.
+ *
+ * This component renders the ORH logo as an SVG. It supports hover effects and
+ * can be styled using the `className` prop.
+ *
+ * @example
+ * <OrhIcon size={40} className="text-blue-500" />
+ *
+ * @param {object} props Component props
+ * @param {number} [props.size=24] The size of the icon
+ * @param {string} [props.className] The CSS class name to apply to the icon
+ */
+export const OrhIcon: React.FC<OpenReactHubIconsProps> = ({ size = 24, className, ...props }) => {
     const [isHovered, setIsHovered] = useState(false);
 
     const handleMouseEnter = () => {
@@ -34,5 +46,3 @@ const Orh: React.FC<OpenReactHubIconsProps> = ({ size = 24, className, ...props 
         </svg>
     );
 };
-
-export const OrhIcon = iconTracker.createTrackedIcon(Orh, 'OrhIcon');
