@@ -1,6 +1,6 @@
 {
     "name": "@open-react-hub/react-icons",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "description": "Lightweight, customizable React icon library",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",

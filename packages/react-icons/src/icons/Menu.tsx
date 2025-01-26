@@ -1,7 +1,8 @@
 import React from 'react';
 import { OpenReactHubIconsProps } from '../types';
+import { iconTracker } from '../tracker';
 
-export const Menu: React.FC<OpenReactHubIconsProps> = ({
+const Menu: React.FC<OpenReactHubIconsProps> = ({
     size = 24,
     color = 'currentColor',
     strokeWidth = 2,
@@ -24,3 +25,5 @@ export const Menu: React.FC<OpenReactHubIconsProps> = ({
         <line x1="3" y1="18" x2="21" y2="18"></line>
     </svg>
 );
+
+export const MenuIcon = iconTracker.createTrackedIcon(Menu, 'MenuIcon');

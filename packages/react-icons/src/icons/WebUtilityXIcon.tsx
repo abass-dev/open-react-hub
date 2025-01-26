@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { OpenReactHubIconsProps } from '../types';
+import { iconTracker } from '../tracker';
 
-export const WebUtilityXIcon: React.FC<OpenReactHubIconsProps> = ({ size = 24, className, ...props }) => {
+const WebUtilityX: React.FC<OpenReactHubIconsProps> = ({ size = 24, className, ...props }) => {
     const [isHovered, setIsHovered] = useState(false);
 
     const handleMouseEnter = () => {
@@ -71,4 +72,5 @@ export const WebUtilityXIcon: React.FC<OpenReactHubIconsProps> = ({ size = 24, c
     );
 };
 
-export default WebUtilityXIcon;
+export const WebUtilityXIcon = iconTracker.createTrackedIcon(WebUtilityX, 'WebUtilityXIcon');
+

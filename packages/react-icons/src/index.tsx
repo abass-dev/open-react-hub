@@ -1,5 +1,5 @@
-export { Menu } from './icons/Menu';
-export { Code } from './icons/Code';
+export { MenuIcon } from './icons/Menu';
+export { CodeIcon } from './icons/Code';
 export { OrhIcon } from './icons/OrhIcon';
 export { WebUtilityXIcon } from './icons/WebUtilityXIcon';
 import { OpenReactHubIconsProps } from './types';

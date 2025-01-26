@@ -1,7 +1,8 @@
 import React from 'react';
 import { OpenReactHubIconsProps } from '../types';
+import { iconTracker } from '../tracker';
 
-export const Code: React.FC<OpenReactHubIconsProps> = ({
+const Code: React.FC<OpenReactHubIconsProps> = ({
     size = 24,
     color = 'currentColor',
     strokeWidth = 2,
@@ -23,3 +24,4 @@ export const Code: React.FC<OpenReactHubIconsProps> = ({
         <polyline points="8 6 2 12 8 18"></polyline>
     </svg>
 );
+export const CodeIcon = iconTracker.createTrackedIcon(Code, 'CodeIcon');

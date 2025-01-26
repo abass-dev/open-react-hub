@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { OpenReactHubIconsProps } from '../types';
+import { iconTracker } from '../tracker';
 
-export const OrhIcon: React.FC<OpenReactHubIconsProps> = ({ size = 24, className, ...props }) => {
+const Orh: React.FC<OpenReactHubIconsProps> = ({ size = 24, className, ...props }) => {
     const [isHovered, setIsHovered] = useState(false);
 
     const handleMouseEnter = () => {
@@ -33,3 +34,5 @@ export const OrhIcon: React.FC<OpenReactHubIconsProps> = ({ size = 24, className
         </svg>
     );
 };
+
+export const OrhIcon = iconTracker.createTrackedIcon(Orh, 'OrhIcon');
