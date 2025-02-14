@@ -1,6 +1,6 @@
 {
   "name": "@open-react-hub/urnotm",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A React context and hooks package for analytics and environment detection.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
