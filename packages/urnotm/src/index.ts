@@ -20,7 +20,8 @@ const defaultUrNMContext: UrNMContextType = {
     mainRef: { current: null },
 };
 
-const UrNMContext = createContext<UrNMContextType>(defaultUrNMContext);
+// Create and export the context
+export const UrNMContext = createContext<UrNMContextType>(defaultUrNMContext);
 
 export function useUrNM() {
     return useContext(UrNMContext);
@@ -115,7 +116,7 @@ export function UrNMProvider({ children }: UrNMProviderProps) {
                         headers: {
                             'Content-Type': 'application/json',
                         },
-                        body: JSON.stringify({ ip })
+                        body: JSON.stringify({ ip }),
                     }
                 );
 
@@ -128,7 +129,7 @@ export function UrNMProvider({ children }: UrNMProviderProps) {
                     city: locationData.city || geoLocation?.city,
                     country: locationData.country || geoLocation?.country,
                     latitude: geoLocation?.latitude,
-                    longitude: geoLocation?.longitude
+                    longitude: geoLocation?.longitude,
                 };
 
                 if (isSubscribed) {
