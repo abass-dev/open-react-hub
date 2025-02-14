@@ -54,7 +54,7 @@ export function UrNMProvider({ children }: UrNMProviderProps) {
         if (typeof window === 'undefined') return false;
 
         try {
-            const apiUrl = process.env.NEXT_PUBLIC_URNOTM_ANALYTICS_API_URL || 'http://localhost:3000/api/urntm-analytics';
+            const apiUrl = 'https://urnotm.vercel.app/api/urntm-analytics';
             const referrerInfo = getReferrerInfo();
 
             // Ensure all required data is present
@@ -109,7 +109,7 @@ export function UrNMProvider({ children }: UrNMProviderProps) {
             try {
                 const ip = await getUserIP();
                 const response = await fetch(
-                    'http://localhost:3000/api/get-urntm-location',
+                    'https://urnotm.vercel.app/api/get-urntm-location',
                     {
                         method: 'POST',
                         headers: {
