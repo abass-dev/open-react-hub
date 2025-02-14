@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, useMemo, useCallback, useRef } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { getCurrentLocation, getDeviceType, getOrCreateSessionId, getReferrerInfo, getUserIP } from './helpers';
 import type { AnalyticsData, LocationData, UrNMContextType } from './types';
 
@@ -20,8 +20,7 @@ const defaultUrNMContext: UrNMContextType = {
     mainRef: { current: null },
 };
 
-// Create and export the context
-export const UrNMContext = createContext<UrNMContextType>(defaultUrNMContext);
+const UrNMContext = createContext<UrNMContextType>(defaultUrNMContext);
 
 export function useUrNM() {
     return useContext(UrNMContext);
@@ -116,7 +115,7 @@ export function UrNMProvider({ children }: UrNMProviderProps) {
                         headers: {
                             'Content-Type': 'application/json',
                         },
-                        body: JSON.stringify({ ip }),
+                        body: JSON.stringify({ ip })
                     }
                 );
 
@@ -129,7 +128,7 @@ export function UrNMProvider({ children }: UrNMProviderProps) {
                     city: locationData.city || geoLocation?.city,
                     country: locationData.country || geoLocation?.country,
                     latitude: geoLocation?.latitude,
-                    longitude: geoLocation?.longitude,
+                    longitude: geoLocation?.longitude
                 };
 
                 if (isSubscribed) {
@@ -167,8 +166,8 @@ export function UrNMProvider({ children }: UrNMProviderProps) {
     }), [isUrNM, urNMSendAnalytics, domain, isDevelopment, isProduction]);
 
     return (
-        <UrNMContext.Provider value= { contextValue } >
-        { children }
+        <UrNMContext.Provider value={contextValue}>
+            {children}
         </UrNMContext.Provider>
     );
 }
