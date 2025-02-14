@@ -104,7 +104,7 @@ export function UrNMProvider({ children }: UrNMProviderProps) {
         let isSubscribed = true;
 
         const checkUrNM = async () => {
-            if (typeof window === 'undefined' || !domain || !isDevelopment) return;
+            if (typeof window === 'undefined' || !domain) return;
 
             try {
                 const ip = await getUserIP();
