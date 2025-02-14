@@ -1,0 +1,32 @@
+{
+  "name": "@open-react-hub/urnotm",
+  "version": "1.0.0",
+  "description": "A React context and hooks package for analytics and environment detection.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "react",
+    "analytics",
+    "context",
+    "hooks"
+  ],
+  "author": "Aabass Dev abassthedev@gmail.com",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^17.0.0 || ^18.0.0",
+    "react-dom": "^17.0.0 || ^18.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.5.2",
+    "@types/react": "^17.0.0 || ^18.0.0",
+    "@types/react-dom": "^17.0.0 || ^18.0.0"
+  },
+  "files": [
+    "dist"
+  ]
+}
