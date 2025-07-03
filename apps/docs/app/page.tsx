@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { ArrowRight, Code, Book, Zap } from 'lucide-react'
+import Responsive from 'utils/googleADS/Responsive'
 
 export default function Home() {
   return (
@@ -40,11 +41,12 @@ export default function Home() {
           description="Free to use and modify under the MIT license."
         />
       </div>
+      <Responsive />
     </div>
   )
 }
 
-function FeatureCard({ icon: Icon, title, description } : any) {
+function FeatureCard({ icon: Icon, title, description }: any) {
   return (
     <div className="flex flex-col items-center p-6 bg-card rounded-lg shadow-lg transition-all hover:shadow-xl">
       <div className="p-3 bg-primary/10 rounded-full">

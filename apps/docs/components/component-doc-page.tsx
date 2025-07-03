@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import CodeBlock from '@open-react-hub/code-block'
 import { ScrollArea } from './ui/scroll-area'
 import { Badge } from './ui/badge'
+import Responsive from 'utils/googleADS/Responsive'
 
 interface ComponentDocPageProps {
     title: string
@@ -210,6 +211,7 @@ export default function ComponentDocPage({
                     </CardContent>
                 </Card>
             </div>
+            <Responsive />
         </div >
     )
 }

@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import Responsive from 'utils/googleADS/Responsive'
 
 export const metadata: Metadata = {
   title: 'Documentation | OpenReactHub',
@@ -43,6 +44,7 @@ export default function DocsPage() {
           </Button>
         </Link>
       </div>
+      <Responsive />
     </div>
   )
 }

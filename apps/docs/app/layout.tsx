@@ -5,6 +5,7 @@ import { AppSidebar } from '@/components/app-sidebar'
 import { ThemeProvider } from '@/components/theme-provider'
 import { Header } from '@/components/header'
 import { GeistSans } from "geist/font/sans";
+import Analytics from './components/Analytics'
 
 export const metadata = {
   title: 'OpenReactHub Documentation',
@@ -63,8 +64,20 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  // Check if analytics IDs are available
+  const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
+  const ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID
+
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link
+          rel="preload"
+          href="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4160637975098001"
+          as="script"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body className={`${fraunChauPhilomeneOneces.variable} ${GeistSans.className}`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <SidebarProvider>
@@ -81,6 +94,12 @@ export default function RootLayout({
             </div>
           </SidebarProvider>
         </ThemeProvider>
+        {(GA_MEASUREMENT_ID || ADS_ID) && (
+          <Analytics
+            GA_MEASUREMENT_ID={GA_MEASUREMENT_ID}
+            ADS_ID={ADS_ID}
+          />
+        )}
       </body>
     </html>
   )
