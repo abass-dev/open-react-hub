@@ -9,6 +9,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { SupportedLanguage } from 'types/code-block'
 import CodeBlock from '@open-react-hub/code-block'
 
+
 // Sample code snippets organized by category
 const sampleCode = {
     algorithms: {
